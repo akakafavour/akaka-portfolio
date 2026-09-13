@@ -34,7 +34,7 @@ export default function AfterSite() {
 
       {/* Body: headline left, shapes + building right */}
       <div className="relative grid flex-1 grid-cols-[1.05fr_0.95fr] px-[4cqw]">
-        <div className="relative z-10 flex flex-col justify-center pb-[2cqw]">
+        <div className="relative flex flex-col justify-center pb-[2cqw]">
           <p className="text-[3.5cqw] font-semibold leading-[1.1] tracking-tight">
             Modern solutions
             <br />

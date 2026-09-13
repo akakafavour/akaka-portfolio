@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, JetBrains_Mono } from "next/font/google";
+import Preloader from "@/components/Preloader";
 import "./globals.css";
 
 /* Clash Display + Satoshi are self-hosted via @font-face in app/globals.css
@@ -40,7 +41,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${caveat.variable} ${jetbrains.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Preloader />
+        {children}
+      </body>
     </html>
   );
 }

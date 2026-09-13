@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import HandAsset from "./HandAsset";
 import BeforeSite from "./BeforeSite";
@@ -39,14 +39,38 @@ const FAN = [
 ];
 
 /**
- * Hero — mockup-locked: two-line uppercase masked headline with violet
- * asterisk + scribble-underline PNG, mono intro + "View my work" flanking
- * the before/after slider (staged crops, black corner tags, black round
- * handle) over the giant yellow disc, annotation + curved arrow, stack list
- * on the right edge, and a fanned parallax strip of real screenshots.
+ * Hero — mockup-locked: two-line uppercase masked headline with violet SVG
+ * asterisk + scribble-underline SVG stroke, mono intro + "View my work"
+ * flanking the before/after slider (two JSX mini-sites, black corner tags,
+ * black round handle) over the giant yellow disc, Caveat annotation +
+ * curved arrow, stack list on the right edge, and a fanned parallax strip
+ * of real screenshots.
  */
 export default function Hero() {
   const reduce = useReducedMotion();
+  const [revealed, setRevealed] = useState(false);
+
+  // Gate the entrance on the preloader's handoff ("af:reveal") so the
+  // headline mask-reveal happens in front of the visitor, not behind the
+  // overlay. Failsafe: reveal anyway after 3s no matter what.
+  useEffect(() => {
+    if (
+      typeof window === "undefined" ||
+      sessionStorage.getItem("af-loaded") === "1" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setRevealed(true);
+      return;
+    }
+    const onReveal = () => setRevealed(true);
+    window.addEventListener("af:reveal", onReveal);
+    const failsafe = window.setTimeout(() => setRevealed(true), 3000);
+    return () => {
+      window.removeEventListener("af:reveal", onReveal);
+      window.clearTimeout(failsafe);
+    };
+  }, []);
+
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -59,9 +83,9 @@ export default function Hero() {
   const fanY = [fanY1, fanY2, fanY3];
 
   const lineReveal = (delay: number) => ({
-    initial: reduce ? false : ({ y: "110%" } as const),
-    animate: { y: "0%" },
-    transition: { ...SPRING, delay },
+    initial: reduce || !revealed ? { y: "110%" } : { y: "0%" },
+    animate: revealed ? { y: "0%" } : { y: "110%" },
+    transition: { ...SPRING, delay: revealed ? delay : 0 },
   });
 
   return (
@@ -95,9 +119,9 @@ export default function Hero() {
       {/* Slider row flanked by mono intro (left) and stack list (right) */}
       <div className="relative mt-14 lg:mt-20">
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...SPRING, delay: 0.4 }}
+          initial={reduce || !revealed ? { opacity: 0, y: 12 } : false}
+          animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ ...SPRING, delay: revealed ? 0.15 : 0 }}
           className="lg:absolute lg:left-0 lg:top-1/2 lg:z-10 lg:max-w-[240px] lg:-translate-y-1/2"
         >
           <p className="font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
@@ -109,19 +133,14 @@ export default function Hero() {
             className="group mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
           >
             View my work
-            <span
-              aria-hidden="true"
-              className="inline-block transition-transform duration-200 group-hover:translate-x-1"
-            >
-              →
-            </span>
+            <ArrowRight className="inline-block transition-transform duration-200 group-hover:translate-x-1" />
           </a>
         </motion.div>
 
         <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...SPRING, delay: 0.5 }}
+          initial={reduce || !revealed ? { opacity: 0, scale: 0.96 } : false}
+          animate={revealed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
+          transition={{ ...SPRING, delay: revealed ? 0.25 : 0 }}
           className="relative mx-auto max-w-3xl"
         >
           {/* Giant yellow disc — parallax on scroll */}
@@ -131,21 +150,17 @@ export default function Hero() {
             className="absolute -right-12 -top-24 -z-10 h-72 w-72 rounded-full bg-accent sm:-right-20 sm:h-[28rem] sm:w-[28rem]"
           />
 
-          {/* Annotation: "real projects. real results." + curved arrow */}
+          {/* Annotation: "real projects. real results." (Caveat) + curved arrow */}
           <div
             aria-hidden="true"
             className="absolute -right-4 -top-28 z-10 hidden w-44 sm:block"
           >
-            <HandAsset
-              src="/hand/note-real-projects.png"
-              alt="real projects. real results."
-              className="w-full"
-            />
-            <HandAsset
-              src="/hand/arrow-curve.png"
-              alt=""
-              className="ml-auto -mt-1 w-16 rotate-12"
-            />
+            <p className="font-hand text-[1.7rem] leading-[1.02] text-ink">
+              real projects.
+              <br />
+              real results.
+            </p>
+            <HandArrow className="ml-16 mt-1 w-12 rotate-[8deg] text-ink" />
           </div>
 
           <BeforeAfterSlider />
@@ -157,9 +172,9 @@ export default function Hero() {
         </motion.div>
 
         <motion.ul
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...SPRING, delay: 0.6 }}
+          initial={reduce || !revealed ? { opacity: 0, y: 12 } : false}
+          animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ ...SPRING, delay: revealed ? 0.35 : 0 }}
           aria-label="Stack"
           className="mt-10 flex flex-wrap gap-x-5 gap-y-2 lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:flex-col lg:items-end lg:gap-2.5"
         >
@@ -199,9 +214,11 @@ export default function Hero() {
 }
 
 /**
- * Before/after slider — staged crops from the approved mockup
- * (/assets/slider-before.png, /assets/slider-after.png), thin black frame,
- * black BEFORE/AFTER tags at the bottom corners, black round handle.
+ * Before/after slider — two JSX/CSS mini-sites of the same fictional
+ * "BloomHarbor" content (components/BeforeSite.tsx + AfterSite.tsx; the v5
+ * 370px PNG crops were blurry when scaled and are retired). One thin black
+ * frame, black BEFORE/AFTER tags at the bottom corners, black round
+ * ‹› handle, keyboard-operable.
  */
 function BeforeAfterSlider() {
   const [pos, setPos] = useState(50);
@@ -258,29 +275,21 @@ function BeforeAfterSlider() {
           dragging.current = false;
         }}
       >
-        {/* AFTER — base layer (staged crop) */}
+        {/* AFTER — base layer (JSX mini-site, scales crisp) */}
         <div className="absolute inset-0" aria-hidden="true">
-          <HandAsset
-            src="/assets/slider-after.png"
-            alt=""
-            className="h-full w-full object-cover"
-          />
+          <AfterSite />
           <span className="eyebrow absolute bottom-3 right-3 rounded bg-ink px-2.5 py-1 text-bg">
             After
           </span>
         </div>
 
-        {/* BEFORE — top layer, clipped from the right (staged crop) */}
+        {/* BEFORE — top layer, clipped from the right (JSX mini-site) */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-[1]"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
           aria-hidden="true"
         >
-          <HandAsset
-            src="/assets/slider-before.png"
-            alt=""
-            className="h-full w-full object-cover"
-          />
+          <BeforeSite />
           <span className="eyebrow absolute bottom-3 left-3 rounded bg-ink px-2.5 py-1 text-bg">
             Before
           </span>
@@ -307,9 +316,7 @@ function BeforeAfterSlider() {
           className="absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg"
           style={{ left: `${pos}%` }}
         >
-          <span aria-hidden="true" className="text-sm font-bold leading-none">
-            ‹›
-          </span>
+          <ChevronGrips className="h-[18px] w-[18px]" />
         </div>
       </div>
     </div>

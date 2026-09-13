@@ -6,6 +6,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "framer-motion";
 import SectionEyebrow from "./SectionEyebrow";
 import HandAsset from "./HandAsset";
+import Float3D from "./Float3D";
+import {
+  Asterisk,
+  ChatIcon,
+  ClockIcon,
+  CodeIcon,
+  DocIcon,
+  HandArrow,
+  PencilIcon,
+  RocketIcon,
+} from "./Glyphs";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +28,8 @@ type Step = {
   heading: string;
   body: string;
   image: string;
+  icon: React.ReactNode;
+  days: string;
 };
 
 /* Copy is EXACT from the approved mockup — do not paraphrase.
@@ -28,6 +41,8 @@ const STEPS: Step[] = [
     heading: "Understand your goals.",
     body: "We discuss your vision, audience, features and goals. I ask the right questions, so we build the right thing.",
     image: "/assets/pipeline-brief.png",
+    icon: <ChatIcon className="h-[18px] w-[18px]" />,
+    days: "1–2 days",
   },
   {
     num: "02",
@@ -35,6 +50,8 @@ const STEPS: Step[] = [
     heading: "Turn ideas into layouts.",
     body: "I create clean, modern designs that match your brand and audience. You'll get interactive mockups before we build.",
     image: "/assets/pipeline-design.png",
+    icon: <PencilIcon className="h-[18px] w-[18px]" />,
+    days: "2–4 days",
   },
   {
     num: "03",
@@ -42,6 +59,8 @@ const STEPS: Step[] = [
     heading: "Bring it to life.",
     body: "I turn designs into fast, responsive websites using clean code and modern tools. You get a smooth experience, on every device.",
     image: "/assets/pipeline-build.png",
+    icon: <CodeIcon className="h-[18px] w-[18px]" />,
+    days: "3–7 days",
   },
   {
     num: "04",
@@ -49,6 +68,8 @@ const STEPS: Step[] = [
     heading: "Go live, get results.",
     body: "I deploy your site, set up analytics, optimize for performance and test everything. Then we launch and make sure it's running smoothly.",
     image: "/assets/pipeline-ship.png",
+    icon: <RocketIcon className="h-[18px] w-[18px]" />,
+    days: "1–2 days",
   },
   {
     num: "05",
@@ -56,8 +77,19 @@ const STEPS: Step[] = [
     heading: "You're in control.",
     body: "I deliver all the files, credentials and documentation you need. Plus, I'm always here if you need updates or support.",
     image: "/assets/pipeline-handoff.png",
+    icon: <DocIcon className="h-[18px] w-[18px]" />,
+    days: "1 day",
   },
 ];
+
+/* 3D renders placed with a job, not as decoration (v6.1): bulb watches the
+   brief, cube anchors the build, rocket rides ship, tick signs the handoff. */
+const STEP_3D: Record<string, { src: string; className: string; size: number }> = {
+  "01": { src: "/assets/3d/bulb.png", className: "-right-7 -top-9", size: 78 },
+  "03": { src: "/assets/3d/cube.png", className: "-right-6 -top-8", size: 74 },
+  "04": { src: "/assets/3d/rocket.png", className: "-right-8 -top-10", size: 88 },
+  "05": { src: "/assets/3d/tick.png", className: "-right-6 -top-8", size: 72 },
+};
 
 /**
  * THE P✳PELINE — mockup-locked. Giant outlined display title, five white
@@ -165,25 +197,26 @@ export default function Process() {
             <p className="max-w-xs font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
               A clear, proven process from idea to launch. No guesswork.
             </p>
-            <HandAsset
-              src="/hand/note-idea-live.png"
-              alt="From idea to live site."
-              className="hidden w-36 self-end sm:block"
-            />
+            <div aria-hidden="true" className="hidden w-40 self-end sm:block">
+              <p className="font-hand text-2xl leading-[1.05] text-ink">
+                From idea
+                <br />
+                to live site.
+              </p>
+              <HandArrow className="ml-2 mt-0 w-9 -scale-x-100 rotate-[24deg] text-accent" />
+            </div>
           </div>
 
-          {/* Giant outlined display title — violet asterisk replaces the I */}
+          {/* Giant outlined display title — violet SVG asterisk replaces the I */}
           <h2
             id="process-heading"
-            className="text-center font-display text-[clamp(3.25rem,11vw,9rem)] font-semibold uppercase leading-none tracking-tight text-transparent [-webkit-text-stroke:2px_#111214]"
+            className="text-center font-display text-[clamp(3.25rem,11vw,9rem)] font-semibold uppercase leading-none tracking-[0.04em] text-transparent [-webkit-text-stroke:2px_#111214]"
           >
             The P
-            <span
+            <Asterisk
               aria-hidden="true"
-              className="text-violet [-webkit-text-stroke:0]"
-            >
-              ✳
-            </span>
+              className="mx-[0.04em] inline-block h-[0.62em] w-[0.62em] -translate-y-[0.04em] text-violet [-webkit-text-stroke:0]"
+            />
             pline
           </h2>
         </div>
@@ -221,13 +254,21 @@ export default function Process() {
               ref={trackRef}
               className="flex w-max items-stretch gap-10 px-6 sm:px-10"
             >
-              {STEPS.map((step) => (
+              {STEPS.map((step) => {
+                const threeD = STEP_3D[step.num];
+                return (
                 <div
                   key={step.num}
                   className="relative flex w-[300px] shrink-0 snap-center flex-col sm:w-[360px]"
                 >
-                  {/* Label ABOVE the card, per mockup */}
-                  <p className="eyebrow mb-3 text-muted">
+                  {/* Label ABOVE the card, per mockup — with icon chip */}
+                  <p className="eyebrow mb-3 flex items-center gap-2.5 text-muted">
+                    <span
+                      aria-hidden="true"
+                      className="grid h-7 w-7 place-items-center rounded-lg bg-accent text-ink"
+                    >
+                      {step.icon}
+                    </span>
                     {step.num}. {step.label}
                   </p>
                   <div className="relative flex flex-1 flex-col">
@@ -236,6 +277,13 @@ export default function Process() {
                       aria-hidden="true"
                       className="absolute -left-1.5 -top-1.5 z-10 h-3.5 w-3.5 rounded-full bg-accent ring-4 ring-bg"
                     />
+                    {threeD && (
+                      <Float3D
+                        src={threeD.src}
+                        size={threeD.size}
+                        className={threeD.className}
+                      />
+                    )}
                     <article className="flex flex-1 flex-col rounded-2xl border border-ink bg-surface p-5 shadow-[0_14px_30px_-16px_rgba(17,18,20,0.25)]">
                       <div className="overflow-hidden rounded-lg border border-line">
                         <HandAsset
@@ -251,15 +299,22 @@ export default function Process() {
                         {step.body}
                       </p>
                       <p className="eyebrow mt-5 flex items-center justify-between border-t border-line pt-4 text-muted">
-                        <span>{step.num} / 05</span>
-                        <span aria-hidden="true" className="text-ink">
-                          →
+                        <span className="flex items-center gap-1.5">
+                          <ClockIcon className="h-3.5 w-3.5" />
+                          {step.days}
+                        </span>
+                        <span className="flex items-center gap-2">
+                          {step.num} / 05
+                          <span aria-hidden="true" className="text-ink">
+                            →
+                          </span>
                         </span>
                       </p>
                     </article>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -284,6 +339,12 @@ export default function Process() {
               style={{ left: "8%" }}
             />
           </div>
+
+          {/* Total-time strip — speed is the offer */}
+          <p className="eyebrow mx-auto mt-6 flex w-fit items-center gap-2.5 rounded-full border border-ink bg-surface px-5 py-2.5 text-ink">
+            <ClockIcon className="h-4 w-4 text-accent-hover" />
+            Total: about 7–10 days to live
+          </p>
 
           {/* Arrow controls — snap mode only (mobile + reduced motion) */}
           {mode === "snap" && (
@@ -311,9 +372,7 @@ export default function Process() {
         {/* Signature row — mockup-accurate */}
         <div className="mx-auto mt-12 flex w-full max-w-6xl shrink-0 flex-wrap items-center justify-between gap-4 px-4 sm:px-10">
           <p className="flex items-center gap-3">
-            <span aria-hidden="true" className="text-3xl leading-none text-ink">
-              ✳
-            </span>
+            <Asterisk aria-hidden="true" className="h-7 w-7 text-ink" />
             <span className="font-mono text-xs uppercase leading-relaxed tracking-[0.12em] text-muted">
               Better process.
               <br />
