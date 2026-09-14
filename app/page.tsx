@@ -2,11 +2,11 @@ import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Work from "@/components/Work";
-import StackGrid from "@/components/StackGrid";
 import CaseStudy from "@/components/CaseStudy";
 import About from "@/components/About";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
+import LogoMarquee from "@/components/LogoMarquee";
 import Footer from "@/components/Footer";
 
 export default function Page() {
@@ -33,11 +33,6 @@ export default function Page() {
       />
 
       <div className="relative">
-        {/* Faint dotted center spine */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-1/2 hidden -translate-x-1/2 border-l-2 border-dotted border-line md:block"
-        />
         {/* 01–04 page ruler — left edge, desktop only */}
         <div
           aria-hidden="true"
@@ -58,12 +53,12 @@ export default function Page() {
           <Hero />
           <Marquee />
           <Work />
-          <StackGrid />
           <CaseStudy />
           <About />
           <Process />
           <Contact />
         </main>
+        <LogoMarquee />
         <Footer />
       </div>
     </>

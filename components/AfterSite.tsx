@@ -35,25 +35,25 @@ export default function AfterSite() {
       {/* Body: headline left, shapes + building right */}
       <div className="relative grid flex-1 grid-cols-[1.05fr_0.95fr] px-[4cqw]">
         <div className="relative flex flex-col justify-center pb-[2cqw]">
-          <p className="text-[3.5cqw] font-semibold leading-[1.1] tracking-tight">
+          <p className="text-[4.2cqw] font-semibold leading-[1.08] tracking-tight">
             Modern solutions
             <br />
             for <span className="text-violet">growing brands.</span>
           </p>
-          <p className="mt-[1.4cqw] max-w-[34cqw] text-[1.5cqw] leading-relaxed text-muted">
+          <p className="mt-[1.5cqw] max-w-[36cqw] text-[1.7cqw] leading-relaxed text-muted">
             We help businesses build powerful websites, automate workflows and
             turn ideas into real growth.
           </p>
-          <div className="mt-[2.1cqw] flex items-center gap-[2cqw]">
-            <span className="flex items-center gap-[0.8cqw] rounded-full bg-[#a3e635] px-[2.4cqw] py-[1.1cqw] text-[1.45cqw] font-medium text-ink">
+          <div className="mt-[2.3cqw] flex items-center gap-[2.2cqw]">
+            <span className="flex items-center gap-[0.9cqw] rounded-full bg-[#a3e635] px-[2.6cqw] py-[1.2cqw] text-[1.65cqw] font-medium text-ink">
               Get Started
-              <ArrowRight className="h-[1.4cqw] w-[1.4cqw]" />
+              <ArrowRight className="h-[1.5cqw] w-[1.5cqw]" />
             </span>
-            <span className="flex items-center gap-[0.8cqw] text-[1.45cqw] text-ink">
-              <span className="grid h-[2.6cqw] w-[2.6cqw] place-items-center rounded-full border border-ink/30">
+            <span className="flex items-center gap-[0.9cqw] text-[1.65cqw] text-ink">
+              <span className="grid h-[2.9cqw] w-[2.9cqw] place-items-center rounded-full border border-ink/30">
                 <svg
                   viewBox="0 0 10 10"
-                  className="h-[1cqw] w-[1cqw]"
+                  className="h-[1.1cqw] w-[1.1cqw]"
                   fill="currentColor"
                   aria-hidden="true"
                 >

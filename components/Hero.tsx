@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import HandAsset from "./HandAsset";
 import BeforeSite from "./BeforeSite";
 import AfterSite from "./AfterSite";
+import ProjectLoop from "./ProjectLoop";
 import { ArrowRight, ChevronGrips } from "./Arrows";
 import { Asterisk, HandArrow, ScribbleUnderline } from "./Glyphs";
 
@@ -18,24 +18,6 @@ const STACK = [
   "Node",
   "Supabase",
   "AWS",
-];
-
-const FAN = [
-  {
-    src: "/work/munachi-hero.png",
-    className: "left-1/2 top-10 w-52 -translate-x-[105%] -rotate-6 sm:w-60",
-    parallax: 60,
-  },
-  {
-    src: "/work/vartex-hero.png",
-    className: "left-1/2 top-4 w-52 -translate-x-1/2 z-10 sm:w-64",
-    parallax: 30,
-  },
-  {
-    src: "/work/oivs-hero.png",
-    className: "left-1/2 top-10 w-52 translate-x-[5%] rotate-[7deg] sm:w-60",
-    parallax: 90,
-  },
 ];
 
 /**
@@ -64,7 +46,7 @@ export default function Hero() {
     }
     const onReveal = () => setRevealed(true);
     window.addEventListener("af:reveal", onReveal);
-    const failsafe = window.setTimeout(() => setRevealed(true), 3000);
+    const failsafe = window.setTimeout(() => setRevealed(true), 3800);
     return () => {
       window.removeEventListener("af:reveal", onReveal);
       window.clearTimeout(failsafe);
@@ -77,10 +59,6 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
   const discY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
-  const fanY1 = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -FAN[0].parallax]);
-  const fanY2 = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -FAN[1].parallax]);
-  const fanY3 = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -FAN[2].parallax]);
-  const fanY = [fanY1, fanY2, fanY3];
 
   const lineReveal = (delay: number) => ({
     initial: reduce || !revealed ? { y: "110%" } : { y: "0%" },
@@ -122,11 +100,10 @@ export default function Hero() {
           initial={reduce || !revealed ? { opacity: 0, y: 12 } : false}
           animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ ...SPRING, delay: revealed ? 0.15 : 0 }}
-          className="lg:absolute lg:left-0 lg:top-1/2 lg:z-10 lg:max-w-[240px] lg:-translate-y-1/2"
+          className="xl:absolute xl:left-0 xl:top-1/2 xl:z-10 xl:max-w-[200px] xl:-translate-y-1/2"
         >
           <p className="font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
-            Modern, fast &amp; conversion-focused websites for creators,
-            startups and businesses.
+            Full-stack developer &amp; designer — Port Harcourt, Nigeria
           </p>
           <a
             href="#work"
@@ -176,7 +153,7 @@ export default function Hero() {
           animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ ...SPRING, delay: revealed ? 0.35 : 0 }}
           aria-label="Stack"
-          className="mt-10 flex flex-wrap gap-x-5 gap-y-2 lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:flex-col lg:items-end lg:gap-2.5"
+          className="mt-10 flex flex-wrap gap-x-5 gap-y-2 xl:absolute xl:right-0 xl:top-1/2 xl:mt-0 xl:-translate-y-1/2 xl:flex-col xl:items-end xl:gap-2.5"
         >
           {STACK.map((item) => (
             <li
@@ -190,25 +167,8 @@ export default function Hero() {
         </motion.ul>
       </div>
 
-      {/* Fanned real screenshots — parallax drift (decorative) */}
-      <div
-        aria-hidden="true"
-        className="relative mx-auto mt-20 hidden h-44 max-w-3xl sm:block lg:h-52"
-      >
-        {FAN.map((card, i) => (
-          <motion.div
-            key={card.src}
-            style={{ y: fanY[i] }}
-            className={`absolute overflow-hidden rounded-lg border border-ink bg-surface shadow-[0_18px_40px_-18px_rgba(17,18,20,0.35)] transition-transform duration-300 hover:z-20 hover:rotate-0 ${card.className}`}
-          >
-            <HandAsset
-              src={card.src}
-              alt=""
-              className="h-36 w-full object-cover object-top sm:h-40"
-            />
-          </motion.div>
-        ))}
-      </div>
+      {/* Infinite project loop — fan energy, real function */}
+      <ProjectLoop />
     </section>
   );
 }
@@ -221,32 +181,51 @@ export default function Hero() {
  * ‹› handle, keyboard-operable.
  */
 function BeforeAfterSlider() {
-  const [pos, setPos] = useState(50);
   const trackRef = useRef<HTMLDivElement>(null);
+  const beforeRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
+  const posRef = useRef(100);
+
+  // The handle is scroll-driven: at rest the dated site fills the frame,
+  // scrolling through the hero reveals the modern side. Drag/keyboard give
+  // manual control until the next scroll movement. No self-movement.
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start 95%", "start 35%"],
+  });
+
+  const applyPos = (next: number) => {
+    // keep the handle on-frame (a fully clipped edge would half-hide it)
+    const clamped = Math.min(98, Math.max(2, next));
+    posRef.current = clamped;
+    if (beforeRef.current)
+      beforeRef.current.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
+    if (dividerRef.current) dividerRef.current.style.left = `${clamped}%`;
+    if (handleRef.current) {
+      handleRef.current.style.left = `${clamped}%`;
+      handleRef.current.setAttribute("aria-valuenow", String(Math.round(clamped)));
+      handleRef.current.setAttribute(
+        "aria-valuetext",
+        `${Math.round(clamped)}% of the old site visible`
+      );
+    }
+  };
+
+  useEffect(() => {
+    const unsub = scrollYProgress.on("change", (v) => {
+      applyPos(100 - v * 100);
+    });
+    applyPos(100 - scrollYProgress.get() * 100);
+    return unsub;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollYProgress]);
 
   const setFromClientX = (clientX: number) => {
     const rect = trackRef.current?.getBoundingClientRect();
     if (!rect || rect.width === 0) return;
-    const next = ((clientX - rect.left) / rect.width) * 100;
-    setPos(Math.min(100, Math.max(0, next)));
-  };
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const step = e.shiftKey ? 10 : 4;
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      setPos((p) => Math.max(0, p - step));
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault();
-      setPos((p) => Math.min(100, p + step));
-    } else if (e.key === "Home") {
-      e.preventDefault();
-      setPos(0);
-    } else if (e.key === "End") {
-      e.preventDefault();
-      setPos(100);
-    }
+    applyPos(((clientX - rect.left) / rect.width) * 100);
   };
 
   return (
@@ -285,8 +264,9 @@ function BeforeAfterSlider() {
 
         {/* BEFORE — top layer, clipped from the right (JSX mini-site) */}
         <div
+          ref={beforeRef}
           className="absolute inset-0 z-[1]"
-          style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+          style={{ clipPath: "inset(0 0% 0 0)" }}
           aria-hidden="true"
         >
           <BeforeSite />
@@ -297,24 +277,41 @@ function BeforeAfterSlider() {
 
         {/* Divider line */}
         <div
+          ref={dividerRef}
           className="pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-ink"
-          style={{ left: `${pos}%` }}
+          style={{ left: "100%" }}
           aria-hidden="true"
         />
 
         {/* Handle — black round badge, keyboard-operable */}
         <div
+          ref={handleRef}
           role="slider"
           tabIndex={0}
           aria-label="Before and after divider. Left arrow shows more of the old site. Right arrow shows more of the redesign."
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(pos)}
-          aria-valuetext={`${Math.round(pos)}% of the old site visible`}
+          aria-valuenow={100}
+          aria-valuetext="100% of the old site visible"
           aria-orientation="horizontal"
-          onKeyDown={onKeyDown}
+          onKeyDown={(e) => {
+            const step = e.shiftKey ? 10 : 4;
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              applyPos(posRef.current - step);
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              applyPos(posRef.current + step);
+            } else if (e.key === "Home") {
+              e.preventDefault();
+              applyPos(100);
+            } else if (e.key === "End") {
+              e.preventDefault();
+              applyPos(0);
+            }
+          }}
           className="absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg"
-          style={{ left: `${pos}%` }}
+          style={{ left: "100%" }}
         >
           <ChevronGrips className="h-[18px] w-[18px]" />
         </div>

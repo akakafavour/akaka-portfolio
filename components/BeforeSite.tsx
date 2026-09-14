@@ -44,16 +44,23 @@ export default function BeforeSite() {
           </span>
         </div>
 
-        {/* Dated CSS skyline — deliberately flat and gray */}
-        <div className="relative overflow-hidden rounded-sm bg-gradient-to-b from-[#d2d0cb] to-[#b6b4af]">
+        {/* Dated CSS "photo" — flat gray skyline with a muted window grid */}
+        <div className="relative overflow-hidden rounded-sm bg-gradient-to-b from-[#c9c7c2] to-[#a8a6a1]">
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-[1.2cqw]">
-            <span className="h-[36%] w-[13%] bg-[#a9a7a2]" />
-            <span className="h-[56%] w-[17%] bg-[#97958f]" />
-            <span className="h-[44%] w-[11%] bg-[#b3b1ac]" />
-            <span className="h-[68%] w-[19%] bg-[#8f8d86]" />
-            <span className="h-[50%] w-[13%] bg-[#a09e98]" />
-            <span className="h-[30%] w-[10%] bg-[#adaaa4]" />
+            <span className="h-[36%] w-[13%] bg-[#9a9893]" />
+            <span className="h-[56%] w-[17%] bg-[#8a8882]" />
+            <span className="h-[44%] w-[11%] bg-[#a5a39e]" />
+            <span className="h-[68%] w-[19%] bg-[#7f7d77]" />
+            <span className="h-[50%] w-[13%] bg-[#949290]" />
+            <span className="h-[30%] w-[10%] bg-[#a19f99]" />
           </div>
+          <span
+            className="absolute inset-0 opacity-40"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(to bottom, transparent 0 6px, rgba(255,255,255,0.35) 6px 8px), repeating-linear-gradient(to right, transparent 0 8px, rgba(60,60,60,0.25) 8px 10px)",
+            }}
+          />
         </div>
       </div>
     </div>

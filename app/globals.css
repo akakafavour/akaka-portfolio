@@ -156,3 +156,9 @@
 .bh-old {
   font-family: Georgia, "Times New Roman", serif;
 }
+
+@keyframes projectloop {
+  to {
+    transform: translateX(-50%);
+  }
+}

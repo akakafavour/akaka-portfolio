@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PROJECTS } from "@/lib/projects";
+import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 import { ArrowUpRight, ArrowRight } from "@/components/Arrows";
 import { Asterisk, TickIcon } from "@/components/Glyphs";
 
@@ -40,7 +42,23 @@ export default async function WorkPage({
   const next = PROJECTS[(index + 1) % PROJECTS.length];
 
   return (
-    <main id="main" className="mx-auto w-full max-w-5xl px-4 pb-24 pt-32 sm:px-6 sm:pt-36">
+    <>
+      {/* Site chrome — same as home */}
+      <div className="grain-overlay" aria-hidden="true" />
+      <SiteHeader />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed right-0 top-0 z-40 h-20 w-20 rounded-bl-full bg-violet"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-0 left-0 z-40 h-16 w-16 rounded-tr-full bg-violet"
+      />
+
+      <main
+        id="main"
+        className="mx-auto w-full max-w-5xl px-4 pb-24 pt-32 sm:px-6 sm:pt-36"
+      >
       {/* Breadcrumb */}
       <Link
         href="/#work"
@@ -149,16 +167,9 @@ export default async function WorkPage({
         <aside className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
           <div>
             <p className="eyebrow text-muted">Stack</p>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {project.stack.map((tool) => (
-                <li
-                  key={tool}
-                  className="rounded-full border border-ink bg-surface px-3.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-ink"
-                >
-                  {tool}
-                </li>
-              ))}
-            </ul>
+            <p className="mt-4 font-mono text-xs uppercase leading-loose tracking-[0.12em] text-ink">
+              {project.stack.join("  /  ")}
+            </p>
           </div>
           <div>
             <p className="eyebrow text-muted">What it includes</p>
@@ -186,27 +197,42 @@ export default async function WorkPage({
         </aside>
       </div>
 
-      {/* Next project */}
+      {/* Next project — a moment, not a button */}
       <nav
         aria-label="Next project"
-        className="mt-20 flex items-center justify-between gap-4 border-t border-line pt-8"
+        className="mt-20 overflow-hidden rounded-2xl border border-ink bg-surface"
       >
         <Link
           href={`/work/${next.slug}`}
-          className="group flex items-center gap-3"
+          className="group relative grid grid-cols-[1fr_auto] items-center gap-6 p-8 transition-colors duration-300 hover:bg-ink sm:p-10"
         >
-          <span className="grid h-11 w-11 place-items-center rounded-full border border-ink text-ink transition-colors group-hover:bg-accent">
-            <ArrowRight className="transition-transform duration-200 group-hover:translate-x-0.5" />
-          </span>
-          <span>
-            <span className="eyebrow block text-muted">Next project</span>
-            <span className="font-display text-lg font-semibold text-ink">
+          <div>
+            <p className="eyebrow text-muted transition-colors group-hover:text-bg/60">
+              Next project
+            </p>
+            <p className="mt-2 font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-none tracking-tight text-ink transition-colors group-hover:text-bg">
               {next.name}
-            </span>
-          </span>
+            </p>
+            <p className="eyebrow mt-3 flex items-center gap-2 text-muted transition-colors group-hover:text-accent">
+              {next.category}
+              <ArrowRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"
+              />
+            </p>
+          </div>
+          <div
+            aria-hidden="true"
+            className="relative hidden w-52 justify-self-end overflow-hidden rounded-lg border border-line opacity-0 transition-all duration-300 group-hover:opacity-100 sm:block"
+          >
+            <img src={next.image} alt="" className="w-full" loading="lazy" />
+          </div>
         </Link>
-        <Asterisk aria-hidden="true" className="h-6 w-6 text-violet" />
       </nav>
+
+      <Asterisk aria-hidden="true" className="mx-auto mt-10 h-6 w-6 text-violet" />
     </main>
+    <Footer />
+    </>
   );
 }

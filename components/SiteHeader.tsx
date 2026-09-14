@@ -63,7 +63,7 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? "true" : undefined}
-              className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-bg transition-colors hover:bg-accent hover:text-ink ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-1.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.04em] text-bg transition-colors hover:bg-accent hover:text-ink sm:px-3 sm:text-xs sm:tracking-[0.08em] ${
                 isActive
                   ? "underline decoration-accent decoration-2 underline-offset-[6px]"
                   : ""
@@ -75,7 +75,7 @@ export default function SiteHeader() {
         })}
         <a
           href="#contact"
-          className="ml-2 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent-hover"
+          className="ml-2 hidden shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent-hover sm:inline-flex"
         >
           Let&apos;s talk
           <span aria-hidden="true" className="inline-block">

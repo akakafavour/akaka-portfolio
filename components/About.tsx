@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import HandAsset from "./HandAsset";
 import Reveal from "./Reveal";
+import { Asterisk, HandArrow } from "./Glyphs";
 
 const WHATSAPP_URL = "https://wa.me/REPLACE_WITH_NUMBER";
 const EMAIL_URL = "mailto:[AKAKA-EMAIL]";
@@ -131,13 +132,16 @@ export default function About() {
                 className="font-display text-[clamp(2rem,3.6vw,2.9rem)] font-semibold leading-[1.08] tracking-tight"
               >
                 I Turn Ideas Into Working Websites.{" "}
-                <span aria-hidden="true" className="text-violet">✳</span>
+                <Asterisk
+                  aria-hidden="true"
+                  className="inline-block h-[0.5em] w-[0.5em] -translate-y-[0.05em] text-violet"
+                />
               </h2>
             </Reveal>
             <p className="mt-5 leading-relaxed text-muted">
-              I&apos;m a freelance developer and designer focused on building
-              clean, fast and high-converting websites. I care about details,
-              performance and results.
+              Three years in: I design and build websites — and I write the
+              copy that positions them to sell. Clean, fast, high-converting,
+              down to the last detail.
             </p>
             <p className="mt-4 font-hand text-xl leading-snug text-ink">
               Now: building AI agent tooling and shipping client work from Port
@@ -162,11 +166,19 @@ export default function About() {
               aria-hidden="true"
               className="absolute -right-4 -top-2 z-10 h-6 w-14 rotate-45 rounded-sm bg-accent/80"
             />
-            <HandAsset
-              src="/hand/crown.png"
-              alt=""
-              className="absolute -top-14 left-1/2 z-10 w-20 -translate-x-1/2"
-            />
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 40 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="absolute -top-12 left-1/2 z-10 w-16 -translate-x-1/2 text-accent-hover"
+            >
+              <path d="M4 20 6 7l7 6 7-9 7 9 7-6 2 13Z" />
+              <path d="M5 20h30" />
+            </svg>
             <div className="border border-ink bg-surface p-2.5 shadow-[0_18px_40px_-20px_rgba(17,18,20,0.4)]">
               <Image
                 src="/akaka.jpg"
@@ -176,17 +188,13 @@ export default function About() {
                 className="h-auto w-full grayscale"
               />
             </div>
-            <div aria-hidden="true" className="absolute -bottom-12 -right-8 w-36">
-              <HandAsset
-                src="/hand/note-building-next.png"
-                alt="Building for what's next."
-                className="w-full"
-              />
-              <HandAsset
-                src="/hand/arrow-small.png"
-                alt=""
-                className="ml-auto mt-1 w-10"
-              />
+            <div aria-hidden="true" className="absolute -bottom-14 -right-10 w-40">
+              <p className="font-hand text-[1.55rem] leading-[1.05] text-ink">
+                Building for
+                <br />
+                what&apos;s next.
+              </p>
+              <HandArrow className="ml-auto mt-1 w-9 -scale-x-100 -rotate-[20deg] text-accent-hover" />
             </div>
           </motion.figure>
 
@@ -261,12 +269,28 @@ export default function About() {
           </div>
         </div>
 
-        {/* Footer mono line row — mockup-accurate */}
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
-          <p className="eyebrow text-muted">
-            © 2026 Akaka Favour. All rights reserved.
+        {/* The autograph — an actual signature, per the band's name */}
+        <div className="mt-16 flex flex-col items-start gap-1 border-t border-line pt-8">
+          <p
+            aria-hidden="true"
+            className="font-hand text-[2.6rem] leading-none text-ink -rotate-2"
+          >
+            Akaka Favour
           </p>
-          <p className="eyebrow text-muted">Build / Design / Deploy</p>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 180 12"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            className="ml-1 w-44 text-accent"
+          >
+            <path d="M3 8c30-5 62 3 92-2 26-4 52-2 82 2" strokeWidth={2.5} />
+            <path d="M60 10c20 1 44-1 64-3" strokeWidth={1.4} />
+          </svg>
+          <p className="eyebrow mt-2 text-muted">
+            Akaka Favour — designer, developer, copywriter
+          </p>
         </div>
       </div>
     </section>

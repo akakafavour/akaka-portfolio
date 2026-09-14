@@ -53,7 +53,7 @@ export default function Work() {
             id="work-heading"
             className="font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-tight tracking-tight"
           >
-            Featured Projects
+            Here&apos;s what I&apos;ve been up to.
           </h2>
         </Reveal>
         <a

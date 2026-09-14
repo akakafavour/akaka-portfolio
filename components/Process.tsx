@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "framer-motion";
 import SectionEyebrow from "./SectionEyebrow";
 import HandAsset from "./HandAsset";
-import Float3D from "./Float3D";
 import {
   Asterisk,
   ChatIcon,
@@ -81,15 +80,6 @@ const STEPS: Step[] = [
     days: "1 day",
   },
 ];
-
-/* 3D renders placed with a job, not as decoration (v6.1): bulb watches the
-   brief, cube anchors the build, rocket rides ship, tick signs the handoff. */
-const STEP_3D: Record<string, { src: string; className: string; size: number }> = {
-  "01": { src: "/assets/3d/bulb.png", className: "-right-7 -top-9", size: 78 },
-  "03": { src: "/assets/3d/cube.png", className: "-right-6 -top-8", size: 74 },
-  "04": { src: "/assets/3d/rocket.png", className: "-right-8 -top-10", size: 88 },
-  "05": { src: "/assets/3d/tick.png", className: "-right-6 -top-8", size: 72 },
-};
 
 /**
  * THE P✳PELINE — mockup-locked. Giant outlined display title, five white
@@ -189,12 +179,12 @@ export default function Process() {
       aria-labelledby="process-heading"
       className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg lg:h-screen"
     >
-      <div className="flex h-full flex-col py-20 lg:py-8">
+      <div className="flex h-full flex-col py-14 lg:py-8">
         <div className="mx-auto w-full max-w-6xl shrink-0 px-4 sm:px-6">
           <SectionEyebrow label="The pipeline" />
 
           <div className="mt-6 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-start">
-            <p className="max-w-xs font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
+            <p className="hidden max-w-xs font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted lg:block">
               A clear, proven process from idea to launch. No guesswork.
             </p>
             <div aria-hidden="true" className="hidden w-40 self-end sm:block">
@@ -237,7 +227,7 @@ export default function Process() {
           ))}
         </div>
 
-        <div className="relative mt-10 flex-1 lg:mt-4">
+        <div className="relative mt-6 flex-1 lg:mt-4">
           <div
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -254,9 +244,7 @@ export default function Process() {
               ref={trackRef}
               className="flex w-max items-stretch gap-10 px-6 sm:px-10"
             >
-              {STEPS.map((step) => {
-                const threeD = STEP_3D[step.num];
-                return (
+              {STEPS.map((step) => (
                 <div
                   key={step.num}
                   className="relative flex w-[300px] shrink-0 snap-center flex-col sm:w-[360px]"
@@ -277,13 +265,6 @@ export default function Process() {
                       aria-hidden="true"
                       className="absolute -left-1.5 -top-1.5 z-10 h-3.5 w-3.5 rounded-full bg-accent ring-4 ring-bg"
                     />
-                    {threeD && (
-                      <Float3D
-                        src={threeD.src}
-                        size={threeD.size}
-                        className={threeD.className}
-                      />
-                    )}
                     <article className="flex flex-1 flex-col rounded-2xl border border-ink bg-surface p-5 shadow-[0_14px_30px_-16px_rgba(17,18,20,0.25)]">
                       <div className="overflow-hidden rounded-lg border border-line">
                         <HandAsset
@@ -313,8 +294,7 @@ export default function Process() {
                     </article>
                   </div>
                 </div>
-                );
-              })}
+              ))}
             </div>
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
+import { Asterisk } from "./Glyphs";
 
 const EMAIL_URL = "mailto:[AKAKA-EMAIL]";
 const X_URL = "https://x.com/[X-HANDLE]";
@@ -9,10 +10,10 @@ const GITHUB_URL = "https://github.com/Akakaui";
 const WHATSAPP_URL = "https://wa.me/REPLACE_WITH_NUMBER";
 
 const LINKS = [
-  { label: "Email", href: EMAIL_URL, external: false },
-  { label: "X", href: X_URL, external: true },
-  { label: "GitHub", href: GITHUB_URL, external: true },
-  { label: "WhatsApp", href: WHATSAPP_URL, external: true },
+  { label: "Email", href: EMAIL_URL, icon: "/icons/gmail.svg", external: false },
+  { label: "X", href: X_URL, icon: "/icons/x.svg", external: true },
+  { label: "GitHub", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
+  { label: "WhatsApp", href: WHATSAPP_URL, icon: "/icons/whatsapp.svg", external: true },
 ];
 
 /**
@@ -50,9 +51,10 @@ export default function Footer() {
     <footer className="border-t border-ink bg-ink">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_1fr_auto]">
         <p className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-bg">
-          <span aria-hidden="true" className="text-accent">
-            ✳{" "}
-          </span>
+          <Asterisk
+            aria-hidden="true"
+            className="mr-1 inline-block h-[0.55em] w-[0.55em] -translate-y-[0.05em] text-accent"
+          />{" "}
           Let&apos;s Build Something Great
         </p>
         <p className="max-w-xs text-sm leading-relaxed text-bg/70">
@@ -92,8 +94,15 @@ export default function Footer() {
               {...(link.external
                 ? { target: "_blank", rel: "noreferrer" }
                 : {})}
-              className="font-mono text-xs uppercase tracking-[0.1em] text-muted transition-colors hover:text-bg"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted transition-colors hover:text-bg"
             >
+              <img
+                src={link.icon}
+                alt=""
+                aria-hidden="true"
+                className="h-4 w-4 invert"
+                loading="lazy"
+              />
               {link.label}
             </a>
           ))}
