@@ -43,7 +43,7 @@
   /* Mission Control v4.5 — Osmo-flavored light system. Rationale in site/design-brief.md */
   --color-bg: #f5f3ec; /* paper base */
   --color-surface: #ffffff; /* card surface */
-  --color-ink: #111214; /* dark surfaces (pill, terminal, closer) + text alias */
+  --color-ink: #111214; /* text + borders alias (flips light in dark mode) */
   --color-text: #111214; /* body/headline text */
   --color-muted: #565b60;
   --color-line: #e3e0d6;
@@ -53,6 +53,12 @@
   /* Violet is a SHAPE-only accent: the headline glyph + 1-2 small shapes.
      Never for text or links. */
   --color-violet: #6c4cf1;
+  /* pill = dark surface in BOTH themes (header pill, footer, tags, slider
+     handle). on-ink = text that sits on pill surfaces. Neither flips —
+     that's the point. */
+  --color-pill: #111214;
+  --color-on-ink: #f5f3ec;
+  --color-pill: #111214;
 
   /* JetBrains Mono arrives via next/font as --font-jetbrains (app/layout.tsx);
      Caveat arrives as --font-caveat for handwritten annotation fallbacks. */
@@ -60,6 +66,73 @@
   --font-sans: "Satoshi", system-ui, ui-sans-serif, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-hand: var(--font-caveat), "Segoe Script", "Bradley Hand", cursive;
+}
+
+/* ------------------------------------------------------------------
+   DARK MODE — Mission Control at night. One class on <html> redefines
+   the tokens; components don't change. Toggle: ThemeToggle (header).
+   ------------------------------------------------------------------ */
+.dark {
+  --color-bg: #0d0d0f;
+  --color-surface: #17171c;
+  --color-ink: #ededf0; /* text + borders flip light */
+  --color-text: #ededf0;
+  --color-muted: #9ba0a8;
+  --color-line: #2a2a31;
+  --color-accent: #f2b705;
+  --color-accent-hover: #ffca2c;
+  --color-accent-tint: rgba(242, 183, 5, 0.14);
+  --color-violet: #8b77ff;
+  --color-pill: #17171c;
+  --color-on-ink: #ededf0;
+  color-scheme: dark;
+}
+
+/* Liquid metallic — mode-aware chrome for display headings.
+   Light: warm gold/bronze shimmer on paper (#f5f3ec).
+   Dark:  cool silver/chrome shimmer on night (#0d0d0f). */
+.metallic {
+  background-image: linear-gradient(
+    105deg,
+    #b8941a 0%,
+    #f2d060 22%,
+    #a07c12 45%,
+    #f5e08a 62%,
+    #9a7610 80%,
+    #b8941a 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+.dark .metallic {
+  background-image: linear-gradient(
+    105deg,
+    #ffffff 0%,
+    #c9cdd4 22%,
+    #7c818a 45%,
+    #e9ebef 62%,
+    #8a8f98 80%,
+    #ffffff 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @layer base {
@@ -160,5 +233,137 @@
 @keyframes projectloop {
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------
+   SCROLL EXPAND — React Bits scroll-driven media expansion.
+   Mode-aware via CSS variables (see component TSX for dark-mode scrim).
+   ------------------------------------------------------------------ */
+.scroll-expand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-expand--scroller {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+
+.scroll-expand--scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-expand__track {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-expand__stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  --se-title-size: 4rem;
+}
+
+.scroll-expand__frame {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(21% 29% 21% 29% round 24px);
+  will-change: clip-path;
+}
+
+.scroll-expand__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.scroll-expand__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.35));
+}
+
+.scroll-expand__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6%;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.scroll-expand__title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 6%;
+  text-align: center;
+  font-size: var(--se-title-size);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.dark .scroll-expand__title {
+  color: #ededf0;
+  text-shadow: 0 2px 32px rgba(0, 0, 0, 0.7);
+}
+
+.scroll-expand__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.25rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.dark .scroll-expand__hint {
+  color: rgba(237, 240, 240, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-expand__frame {
+    clip-path: inset(0% 0% 0% 0% round 0px) !important;
+  }
+  .scroll-expand__media {
+    transform: scale(1) !important;
+  }
+  .scroll-expand__scrim,
+  .scroll-expand__overlay,
+  .scroll-expand__title,
+  .scroll-expand__hint {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

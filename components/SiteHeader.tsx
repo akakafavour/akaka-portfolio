@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import AnimatedThemeToggler from "./AnimatedThemeToggler";
 
 const NAV = [
   { label: "Work", href: "#work" },
@@ -46,7 +47,7 @@ export default function SiteHeader() {
     >
       <header
         aria-label="Primary"
-        className="pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-ink py-2 pl-2 pr-2 shadow-[0_20px_50px_-20px_rgba(17,18,20,0.5)] [&::-webkit-scrollbar]:hidden"
+        className="pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-pill py-2 pl-2 pr-2 shadow-[0_20px_50px_-20px_rgba(17,18,20,0.5)] [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: "none" }}
       >
         <a
@@ -63,7 +64,7 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? "true" : undefined}
-              className={`shrink-0 whitespace-nowrap rounded-full px-1.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.04em] text-bg transition-colors hover:bg-accent hover:text-ink sm:px-3 sm:text-xs sm:tracking-[0.08em] ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-1.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.04em] text-on-ink transition-colors hover:bg-accent hover:text-ink sm:px-3 sm:text-xs sm:tracking-[0.08em] ${
                 isActive
                   ? "underline decoration-accent decoration-2 underline-offset-[6px]"
                   : ""
@@ -73,9 +74,10 @@ export default function SiteHeader() {
             </a>
           );
         })}
+        <AnimatedThemeToggler />
         <a
           href="#contact"
-          className="ml-2 hidden shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent-hover sm:inline-flex"
+          className="ml-2 hidden shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-pill transition-colors hover:bg-accent-hover sm:inline-flex"
         >
           Let&apos;s talk
           <span aria-hidden="true" className="inline-block">

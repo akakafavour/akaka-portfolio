@@ -7,6 +7,7 @@ import AfterSite from "./AfterSite";
 import ProjectLoop from "./ProjectLoop";
 import { ArrowRight, ChevronGrips } from "./Arrows";
 import { Asterisk, HandArrow, ScribbleUnderline } from "./Glyphs";
+import LiquidMetal from "./LiquidMetal";
 
 const SPRING = { type: "spring", stiffness: 300, damping: 30 } as const;
 
@@ -72,48 +73,50 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative mx-auto w-full max-w-6xl overflow-x-clip px-4 pb-16 pt-32 sm:px-6 sm:pt-40"
     >
-      {/* Giant masked headline */}
-      <h1
-        id="hero-heading"
-        className="relative font-display text-[clamp(2.75rem,8vw,6.5rem)] font-semibold uppercase leading-[1.02] tracking-tight"
-      >
-        <span className="block overflow-hidden pb-1">
-          <motion.span className="block" {...lineReveal(0.15)}>
-            Your website{" "}
-            <Asterisk className="mx-[0.02em] inline-block h-[0.58em] w-[0.58em] -translate-y-[0.03em] text-violet" />{" "}
-            Should
-          </motion.span>
-        </span>
-        <span className="block overflow-hidden pb-3">
-          <motion.span className="block" {...lineReveal(0.28)}>
-            <span className="relative inline-block">
-              Bring you work.
-              <ScribbleUnderline className="absolute -bottom-3 left-0 w-full text-accent" />
-            </span>
-          </motion.span>
-        </span>
-      </h1>
-
-      {/* Slider row flanked by mono intro (left) and stack list (right) */}
-      <div className="relative mt-14 lg:mt-20">
-        <motion.div
-          initial={reduce || !revealed ? { opacity: 0, y: 12 } : false}
-          animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ ...SPRING, delay: revealed ? 0.15 : 0 }}
-          className="xl:absolute xl:left-0 xl:top-1/2 xl:z-10 xl:max-w-[200px] xl:-translate-y-1/2"
+      {/* Giant metallic headline */}
+      <LiquidMetal strength={0.85}>
+        <h1
+          id="hero-heading"
+          className="metallic relative font-display text-[clamp(2.75rem,8vw,6.5rem)] font-semibold uppercase leading-[1.02] tracking-tight"
         >
-          <p className="font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
-            Full-stack developer &amp; designer — Port Harcourt, Nigeria
-          </p>
-          <a
-            href="#work"
-            className="group mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
-          >
-            View my work
-            <ArrowRight className="inline-block transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
-        </motion.div>
+          <span className="block overflow-hidden pb-1">
+            <motion.span className="block" {...lineReveal(0.15)}>
+              Your website{" "}
+              <Asterisk className="mx-[0.02em] inline-block h-[0.58em] w-[0.58em] -translate-y-[0.03em] text-violet" />{" "}
+              Should
+            </motion.span>
+          </span>
+          <span className="block overflow-hidden pb-3">
+            <motion.span className="block" {...lineReveal(0.28)}>
+              <span className="relative inline-block">
+                Bring you work.
+                <ScribbleUnderline className="absolute -bottom-3 left-0 w-full text-accent" />
+              </span>
+            </motion.span>
+          </span>
+        </h1>
+      </LiquidMetal>
 
+      {/* Positioning line — always in flow, above the slider. Never floats. */}
+      <motion.div
+        initial={reduce || !revealed ? { opacity: 0, y: 12 } : false}
+        animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ ...SPRING, delay: revealed ? 0.15 : 0 }}
+        className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+      >
+        <p className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+          Full-stack developer &amp; designer — Port Harcourt, Nigeria
+        </p>
+        <a
+          href="#work"
+          className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-pill underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
+        >
+          View my work
+          <ArrowRight className="inline-block transition-transform duration-200 group-hover:translate-x-1" />
+        </a>
+      </motion.div>
+
+      <div className="relative mt-10 lg:mt-14">
         <motion.div
           initial={reduce || !revealed ? { opacity: 0, scale: 0.96 } : false}
           animate={revealed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
@@ -153,7 +156,7 @@ export default function Hero() {
           animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ ...SPRING, delay: revealed ? 0.35 : 0 }}
           aria-label="Stack"
-          className="mt-10 flex flex-wrap gap-x-5 gap-y-2 xl:absolute xl:right-0 xl:top-1/2 xl:mt-0 xl:-translate-y-1/2 xl:flex-col xl:items-end xl:gap-2.5"
+          className="mt-10 flex flex-wrap gap-x-5 gap-y-2"
         >
           {STACK.map((item) => (
             <li
@@ -163,7 +166,6 @@ export default function Hero() {
               {item}
             </li>
           ))}
-          <li aria-hidden="true" className="hidden lg:mt-3 lg:block lg:h-8 lg:w-px lg:bg-ink" />
         </motion.ul>
       </div>
 
@@ -236,7 +238,7 @@ function BeforeAfterSlider() {
       </p>
       <div
         ref={trackRef}
-        className="@container relative aspect-[16/9] w-full select-none overflow-hidden rounded-xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]"
+        className="@container relative aspect-[4/3] sm:aspect-[16/9] w-full select-none overflow-hidden rounded-xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]"
         style={{ touchAction: "pan-y" }}
         onPointerDown={(e) => {
           dragging.current = true;
@@ -257,7 +259,7 @@ function BeforeAfterSlider() {
         {/* AFTER — base layer (JSX mini-site, scales crisp) */}
         <div className="absolute inset-0" aria-hidden="true">
           <AfterSite />
-          <span className="eyebrow absolute bottom-3 right-3 rounded bg-ink px-2.5 py-1 text-bg">
+          <span className="eyebrow absolute bottom-3 right-3 rounded bg-pill px-2.5 py-1 text-on-ink">
             After
           </span>
         </div>
@@ -270,7 +272,7 @@ function BeforeAfterSlider() {
           aria-hidden="true"
         >
           <BeforeSite />
-          <span className="eyebrow absolute bottom-3 left-3 rounded bg-ink px-2.5 py-1 text-bg">
+          <span className="eyebrow absolute bottom-3 left-3 rounded bg-pill px-2.5 py-1 text-on-ink">
             Before
           </span>
         </div>
@@ -278,7 +280,7 @@ function BeforeAfterSlider() {
         {/* Divider line */}
         <div
           ref={dividerRef}
-          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-ink"
+          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-pill"
           style={{ left: "100%" }}
           aria-hidden="true"
         />
@@ -310,7 +312,7 @@ function BeforeAfterSlider() {
               applyPos(0);
             }
           }}
-          className="absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg"
+          className="absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-pill text-on-ink shadow-lg"
           style={{ left: "100%" }}
         >
           <ChevronGrips className="h-[18px] w-[18px]" />

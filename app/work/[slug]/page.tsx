@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { PROJECTS } from "@/lib/projects";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import CaseStudyHero from "@/components/CaseStudyHero";
 import { ArrowUpRight, ArrowRight } from "@/components/Arrows";
 import { Asterisk, TickIcon } from "@/components/Glyphs";
 
@@ -72,8 +73,7 @@ export default async function WorkPage({
 
       {/* Header */}
       <header className="mt-8">
-        <p className="eyebrow text-muted">{project.category}</p>
-        <h1 className="mt-4 font-display text-[clamp(2.2rem,5.5vw,4rem)] font-semibold leading-[1.05] tracking-tight text-ink">
+        <h1 className="font-display text-[clamp(2.2rem,5.5vw,4rem)] font-semibold leading-[1.05] tracking-tight text-ink">
           {project.name}
         </h1>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
@@ -89,16 +89,16 @@ export default async function WorkPage({
             Visit the live site
             <ArrowUpRight className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-            {project.urlLabel}
-          </span>
         </div>
       </header>
 
-      {/* Hero screenshot */}
-      <figure className="mt-12 overflow-hidden rounded-2xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]">
-        <img src={project.image} alt={project.imageAlt} className="w-full" />
-      </figure>
+      {/* Hero screenshot — scroll-expand reveal */}
+      <CaseStudyHero
+        src={project.image}
+        alt={project.imageAlt}
+        name={project.name}
+        outcome={project.outcome}
+      />
 
       {/* Overview */}
       <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_260px]">
@@ -204,13 +204,13 @@ export default async function WorkPage({
       >
         <Link
           href={`/work/${next.slug}`}
-          className="group relative grid grid-cols-[1fr_auto] items-center gap-6 p-8 transition-colors duration-300 hover:bg-ink sm:p-10"
+          className="group relative grid grid-cols-[1fr_auto] items-center gap-6 p-8 transition-colors duration-300 hover:bg-pill sm:p-10"
         >
           <div>
-            <p className="eyebrow text-muted transition-colors group-hover:text-bg/60">
+            <p className="eyebrow text-muted transition-colors group-hover:text-on-ink/60">
               Next project
             </p>
-            <p className="mt-2 font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-none tracking-tight text-ink transition-colors group-hover:text-bg">
+            <p className="mt-2 font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-none tracking-tight text-ink transition-colors group-hover:text-on-ink">
               {next.name}
             </p>
             <p className="eyebrow mt-3 flex items-center gap-2 text-muted transition-colors group-hover:text-accent">
