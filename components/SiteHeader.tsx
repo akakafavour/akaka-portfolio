@@ -22,13 +22,21 @@ export default function SiteHeader() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState<string | null>(null);
   const [dark, setDark] = useState<boolean | null>(null);
+  // AF spins like a disc: once when the visitor lands, and again on every
+  // theme switch. Spring gives it that record-player wind-down.
+  const [spin, setSpin] = useState(0);
 
-  // Sync with the no-flash boot script's decision (af-theme in localStorage)
   useEffect(() => {
     setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
+  useEffect(() => {
+    const t = window.setTimeout(() => setSpin((s) => s + 360), 1400);
+    return () => window.clearTimeout(t);
+  }, []);
+
   const toggleTheme = () => {
+    setSpin((s) => s + 360);
     const next = !(dark ?? false);
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
@@ -65,7 +73,7 @@ export default function SiteHeader() {
     >
       <header
         aria-label="Primary"
-        className="pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-ink py-2 pl-2 pr-2 shadow-[0_20px_50px_-20px_rgba(17,18,20,0.5)] [&::-webkit-scrollbar]:hidden"
+        className="pointer-events-auto flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-ink py-2 pl-1.5 pr-1.5 shadow-[0_20px_50px_-20px_rgba(17,18,20,0.5)] sm:gap-1 sm:pl-2 sm:pr-2 [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: "none" }}
       >
         {/* AF monogram — looks stock, is secretly the theme switch.
@@ -77,8 +85,8 @@ export default function SiteHeader() {
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           aria-pressed={dark ?? false}
           title="Tap to switch the lights"
-          whileTap={reduce ? undefined : { rotate: 360, scale: 0.88 }}
-          transition={{ type: "spring", stiffness: 260, damping: 18 }}
+          animate={reduce ? undefined : { rotate: spin }}
+          transition={{ type: "spring", stiffness: 110, damping: 11 }}
           className="group mr-1 flex h-8 w-8 shrink-0 cursor-pointer flex-col items-center justify-center rounded-full bg-bg text-ink ring-1 ring-transparent transition-all duration-300 hover:ring-accent"
         >
           <span className="font-display text-[0.7rem] font-semibold leading-none">
@@ -103,11 +111,11 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? "true" : undefined}
-              className={`shrink-0 whitespace-nowrap rounded-full px-1.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.04em] text-bg transition-colors hover:bg-accent hover:text-ink sm:px-3 sm:text-xs sm:tracking-[0.08em] ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-1 py-1.5 font-mono text-[0.55rem] uppercase tracking-[0.03em] text-bg transition-colors hover:bg-accent hover:text-ink sm:px-3 sm:text-xs sm:tracking-[0.08em] ${
                 isActive
                   ? "underline decoration-accent decoration-2 underline-offset-[6px]"
                   : ""
-              }`}
+              } ${item.href === "#contact" ? "hidden sm:inline" : ""}`}
             >
               {item.label}
             </a>
@@ -116,9 +124,9 @@ export default function SiteHeader() {
 
         <a
           href="#contact"
-          className="ml-1 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent-hover sm:ml-2 sm:px-4"
+          className="ml-0.5 inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.06em] text-ink transition-colors hover:bg-accent-hover sm:ml-1 sm:gap-1.5 sm:px-4 sm:text-xs"
         >
-          <span className="hidden sm:inline">Let&apos;s talk</span>
+          <span>Let&apos;s talk</span>
           <span aria-hidden="true" className="inline-block">
             ↗
           </span>
