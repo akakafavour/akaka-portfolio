@@ -13,7 +13,7 @@ export default function AfterSite() {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 flex flex-col overflow-hidden bg-white text-ink"
+      className="bh-site absolute inset-0 flex flex-col overflow-hidden bg-[var(--color-surface)] text-ink"
     >
       {/* Clean nav */}
       <div className="flex items-center justify-between px-[3cqw] py-[1.7cqw]">
@@ -69,7 +69,7 @@ export default function AfterSite() {
         <div className="relative">
           <span className="absolute right-[2%] top-[6%] h-[11cqw] w-[11cqw] rounded-bl-full bg-violet" />
           <span className="absolute bottom-[4%] right-[30%] h-[8cqw] w-[8cqw] rounded-tl-full bg-[#a3e635]" />
-          <div className="absolute bottom-0 right-[6%] h-[44%] w-[30%] overflow-hidden rounded-t-md bg-[#b9b7b2]">
+          <div className="absolute bottom-0 right-[6%] h-[44%] w-[30%] overflow-hidden rounded-t-md bg-[var(--bh-building)]">
             <span
               className="absolute inset-0"
               style={{

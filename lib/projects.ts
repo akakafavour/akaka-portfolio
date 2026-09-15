@@ -62,11 +62,6 @@ export const PROJECTS: Project[] = [
       "SEO foundations + Google Business Profile",
       "Resend email + client handoff docs",
     ],
-    teardown: {
-      problem: "[AKAKA: what did the client need?]",
-      fix: "[AKAKA: what did you build?]",
-      result: "[AKAKA: what changed?]",
-    },
     gallery: [
       {
         src: "/work/vartex-2.png",

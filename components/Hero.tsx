@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
 import BeforeSite from "./BeforeSite";
 import AfterSite from "./AfterSite";
 import ProjectLoop from "./ProjectLoop";
-import { ArrowRight, ChevronGrips } from "./Arrows";
+import { ArrowRight } from "./Arrows";
 import { Asterisk, HandArrow, ScribbleUnderline } from "./Glyphs";
 
 const SPRING = { type: "spring", stiffness: 300, damping: 30 } as const;
@@ -23,10 +23,10 @@ const STACK = [
 /**
  * Hero — mockup-locked: two-line uppercase masked headline with violet SVG
  * asterisk + scribble-underline SVG stroke, mono intro + "View my work"
- * flanking the before/after slider (two JSX mini-sites, black corner tags,
- * black round handle) over the giant yellow disc, Caveat annotation +
- * curved arrow, stack list on the right edge, and a fanned parallax strip
- * of real screenshots.
+ * flanking the before/after reveal (two JSX mini-sites; the modern side
+ * wipes across the dated one as you scroll — no handle, no divider) over
+ * the giant yellow disc, Caveat annotation + curved arrow, stack list on
+ * the right edge.
  */
 export default function Hero() {
   const reduce = useReducedMotion();
@@ -59,6 +59,16 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
   const discY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
+
+  // The before/after wipe is driven by PAGE scroll, not the slider's own
+  // position: at entry the visitor sees only the dated site; the first
+  // ~700px of scrolling smoothly wipes it to the redesign. A spring keeps
+  // it fluid instead of glued to the wheel.
+  const wipe = useSpring(useTransform(scrollYProgress, [0, 0.2], [0, 1]), {
+    stiffness: 90,
+    damping: 24,
+    mass: 0.4,
+  });
 
   const lineReveal = (delay: number) => ({
     initial: reduce || !revealed ? { y: "110%" } : { y: "0%" },
@@ -132,7 +142,7 @@ export default function Hero() {
             className="absolute -right-12 -top-24 -z-10 h-72 w-72 rounded-full bg-accent sm:-right-20 sm:h-[28rem] sm:w-[28rem]"
           />
 
-          {/* Annotation: "real projects. real results." (Caveat) + curved arrow */}
+          {/* Annotation: "before → after." (Caveat) + curved arrow */}
           <div
             aria-hidden="true"
             className="absolute -right-4 -top-28 z-10 hidden w-44 sm:block"
@@ -145,10 +155,10 @@ export default function Hero() {
             <HandArrow className="ml-16 mt-1 w-12 rotate-[8deg] text-ink" />
           </div>
 
-          <BeforeAfterSlider />
+          <BeforeAfterSlider wipe={wipe} />
 
           <p className="eyebrow mt-4 text-muted">
-            Sample redesign. Drag the handle.
+            Sample redesign. It reveals as you scroll.
           </p>
         </motion.div>
 
@@ -178,108 +188,45 @@ export default function Hero() {
 }
 
 /**
- * Before/after slider — two JSX/CSS mini-sites of the same fictional
- * "BloomHarbor" content (components/BeforeSite.tsx + AfterSite.tsx; the v5
- * 370px PNG crops were blurry when scaled and are retired). One thin black
- * frame, black BEFORE/AFTER tags at the bottom corners, black round
- * ‹› handle, keyboard-operable.
+ * Before/after reveal — two JSX/CSS mini-sites of the same fictional
+ * "BloomHarbor" content (components/BeforeSite.tsx + AfterSite.tsx).
+ * Scroll-driven: as the frame travels up the viewport, the modern side
+ * smoothly wipes across the dated one — no handle, no divider line. A
+ * spring on the scroll progress keeps the motion fluid. Black BEFORE/AFTER
+ * tags at the bottom corners.
  */
-function BeforeAfterSlider() {
+function BeforeAfterSlider({
+  wipe,
+}: {
+  wipe: MotionValue<number>;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const beforeRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
-  const dragging = useRef(false);
-  const posRef = useRef(100);
-  const touched = useRef(false);
-  const [hinting, setHinting] = useState(false);
   const reduce = useReducedMotion();
-  const inView = useInView(trackRef, { once: true, amount: 0.4 });
-
-  const applyPos = (next: number) => {
-    // full 0–100 range — drag far enough and one side is completely revealed
-    const clamped = Math.min(100, Math.max(0, next));
-    posRef.current = clamped;
-    if (beforeRef.current)
-      beforeRef.current.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
-    if (dividerRef.current) dividerRef.current.style.left = `${clamped}%`;
-    if (handleRef.current) {
-      handleRef.current.style.left = `${clamped}%`;
-      handleRef.current.setAttribute("aria-valuenow", String(Math.round(clamped)));
-      handleRef.current.setAttribute(
-        "aria-valuetext",
-        `${Math.round(clamped)}% of the old site visible`
-      );
-    }
-  };
-
-  // Affordance: the moment the slider enters the viewport, the divider runs
-  // one silent demo — glides toward the redesign and settles mid-frame — so
-  // visitors see what the handle does without being told. Stops instantly
-  // the moment they grab it. A soft ring pulse on the handle backs it up.
-  useEffect(() => {
-    if (inView) setHinting(true);
-  }, [inView]);
 
   useEffect(() => {
-    if (!inView || reduce) return;
-    const start = performance.now();
-    const D = 2600;
-    const ease = (x: number) =>
-      x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-    let raf = 0;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / D);
-      let p: number;
-      if (t < 0.45) p = 100 + (30 - 100) * ease(t / 0.45);
-      else if (t < 0.75) p = 30 + (55 - 30) * ease((t - 0.45) / 0.3);
-      else p = 55 + (46 - 55) * ease((t - 0.75) / 0.25);
-      if (!touched.current) applyPos(p);
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, reduce]);
-
-  const markTouched = () => {
-    if (!touched.current) {
-      touched.current = true;
-      setHinting(false);
+    if (reduce) {
+      // reduced motion: show the full transformation, no wipe animation
+      if (beforeRef.current)
+        beforeRef.current.style.clipPath = "inset(0 100% 0 0)";
+      return;
     }
-  };
-
-  const setFromClientX = (clientX: number) => {
-    const rect = trackRef.current?.getBoundingClientRect();
-    if (!rect || rect.width === 0) return;
-    applyPos(((clientX - rect.left) / rect.width) * 100);
-  };
+    const unsub = wipe.on("change", (v) => {
+      if (beforeRef.current)
+        beforeRef.current.style.clipPath = `inset(0 ${v * 100}% 0 0)`;
+    });
+    return unsub;
+  }, [wipe, reduce]);
 
   return (
     <div className="relative">
       <p className="sr-only">
-        Interactive demo: a dated website transforms into a modern redesign as
-        you drag the handle.
+        A sample redesign: as you scroll, a dated website smoothly transforms
+        into a modern one.
       </p>
       <div
         ref={trackRef}
         className="@container relative aspect-[16/9] w-full select-none overflow-hidden rounded-xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]"
-        style={{ touchAction: "pan-y" }}
-        onPointerDown={(e) => {
-          dragging.current = true;
-          markTouched();
-          e.currentTarget.setPointerCapture(e.pointerId);
-          e.preventDefault();
-          setFromClientX(e.clientX);
-        }}
-        onPointerMove={(e) => {
-          if (dragging.current) setFromClientX(e.clientX);
-        }}
-        onPointerUp={() => {
-          dragging.current = false;
-        }}
-        onPointerCancel={() => {
-          dragging.current = false;
-        }}
       >
         {/* AFTER — base layer (JSX mini-site, scales crisp) */}
         <div className="absolute inset-0" aria-hidden="true">
@@ -289,7 +236,7 @@ function BeforeAfterSlider() {
           </span>
         </div>
 
-        {/* BEFORE — top layer, clipped from the right (JSX mini-site) */}
+        {/* BEFORE — top layer, wiped away by scroll (JSX mini-site) */}
         <div
           ref={beforeRef}
           className="absolute inset-0 z-[1]"
@@ -300,50 +247,6 @@ function BeforeAfterSlider() {
           <span className="eyebrow absolute bottom-3 left-3 rounded bg-ink px-2.5 py-1 text-bg">
             Before
           </span>
-        </div>
-
-        {/* Divider line */}
-        <div
-          ref={dividerRef}
-          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-ink"
-          style={{ left: "100%" }}
-          aria-hidden="true"
-        />
-
-        {/* Handle — black round badge, keyboard-operable */}
-        <div
-          ref={handleRef}
-          role="slider"
-          tabIndex={0}
-          aria-label="Before and after divider. Left arrow shows more of the old site. Right arrow shows more of the redesign."
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={100}
-          aria-valuetext="100% of the old site visible"
-          aria-orientation="horizontal"
-          onKeyDown={(e) => {
-            markTouched();
-            const step = e.shiftKey ? 10 : 4;
-            if (e.key === "ArrowLeft") {
-              e.preventDefault();
-              applyPos(posRef.current - step);
-            } else if (e.key === "ArrowRight") {
-              e.preventDefault();
-              applyPos(posRef.current + step);
-            } else if (e.key === "Home") {
-              e.preventDefault();
-              applyPos(100);
-            } else if (e.key === "End") {
-              e.preventDefault();
-              applyPos(0);
-            }
-          }}
-          className={`absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg ${
-            hinting ? "af-hint" : ""
-          }`}
-          style={{ left: "100%" }}
-        >
-          <ChevronGrips className="h-[18px] w-[18px]" />
         </div>
       </div>
     </div>

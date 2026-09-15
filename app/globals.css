@@ -135,9 +135,9 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Metallic display text — steel in light mode (dark enough for the paper
-   bg), bright chrome in dark mode. No gold — Akaka's call. Falls back to
-   solid ink if background-clip:text is unsupported. */
+/* Metallic display text — solid ink in light mode (Akaka's call: black on
+   paper), bright chrome sheen in dark mode. Falls back to solid ink if
+   background-clip:text is unsupported. */
 @keyframes shimmer {
   to {
     background-position: 200% center;
@@ -145,21 +145,11 @@
 }
 .metallic {
   color: var(--color-ink);
-  background-image: linear-gradient(
-    100deg,
-    #7c818a 20%,
-    #43474e 40%,
-    #22242a 50%,
-    #43474e 60%,
-    #7c818a 80%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
-/* Dark mode: brighter chrome so the sheen reads on the night background. */
+/* Dark mode: chrome sheen on the night background. */
 .dark .metallic {
   background-image: linear-gradient(
     100deg,
@@ -169,6 +159,11 @@
     #e8eaef 60%,
     #8e929c 80%
   );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .metallic {
@@ -226,7 +221,35 @@
    Cramped serif layout — it is a prop, not product styling.
    All sizes in cqw: the slider frame is a CSS container, so the mock
    scales crisp at any DPI with zero image bytes.
+   Both slider mocks are THEMED: the same vars flip under .dark so the
+   hero before/after demo matches light and dark mode.
    ------------------------------------------------------------------ */
+.bh-site {
+  --bh-bg: #e9e7e2;
+  --bh-fg: #3a3a3a;
+  --bh-fg-strong: #333333;
+  --bh-fg-muted: #6d6d6d;
+  --bh-header: #5f5f5f;
+  --bh-panel-a: #c9c7c2;
+  --bh-panel-b: #a8a6a1;
+  --bh-building: #b9b7b2;
+  --bh-line: #9c9c9c;
+  --bh-btn-bg: #d8d5ce;
+  --bh-btn-fg: #4c4c4c;
+}
+.dark .bh-site {
+  --bh-bg: #191a1f;
+  --bh-fg: #c7c5bf;
+  --bh-fg-strong: #e3e1da;
+  --bh-fg-muted: #8f9298;
+  --bh-header: #2b2d34;
+  --bh-panel-a: #33353c;
+  --bh-panel-b: #26282e;
+  --bh-building: #3c3e46;
+  --bh-line: #4a4d55;
+  --bh-btn-bg: #2f3138;
+  --bh-btn-fg: #c7c5bf;
+}
 .bh-old {
   font-family: Georgia, "Times New Roman", serif;
 }

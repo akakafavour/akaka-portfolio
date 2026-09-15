@@ -42,7 +42,7 @@ const STEPS: Step[] = [
     heading: "Understand your goals.",
     body: "We discuss your vision, audience, features and goals. I ask the right questions, so we build the right thing.",
     art: (
-      <svg viewBox="0 0 260 120" fill="none" className="h-24 w-auto text-ink" aria-hidden="true">
+      <svg viewBox="0 0 260 120" fill="none" className="h-full w-full text-ink" aria-hidden="true">
         <rect x="18" y="22" width="120" height="64" rx="14" stroke="currentColor" strokeWidth="2.5" />
         <path d="M40 86v16l17-16" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
         <path d="M38 44h80M38 58h64" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
@@ -62,7 +62,7 @@ const STEPS: Step[] = [
     heading: "Turn ideas into layouts.",
     body: "I create clean, modern designs that match your brand and audience. You'll get interactive mockups before we build.",
     art: (
-      <svg viewBox="0 0 260 120" fill="none" className="h-24 w-auto text-ink" aria-hidden="true">
+      <svg viewBox="0 0 260 120" fill="none" className="h-full w-full text-ink" aria-hidden="true">
         <rect x="24" y="12" width="184" height="94" rx="10" stroke="currentColor" strokeWidth="2.5" />
         <path d="M24 34h184" stroke="currentColor" strokeWidth="2.5" />
         <circle cx="37" cy="23" r="2.5" fill="currentColor" />
@@ -80,9 +80,9 @@ const STEPS: Step[] = [
     num: "03",
     label: "Build",
     heading: "Bring it to life.",
-    body: "I turn designs into fast, responsive websites using clean code and modern tools. You get a smooth experience, on every device.",
+    body: "I turn designs into fast, responsive builds using clean code and modern tools. You get a smooth experience, on every device.",
     art: (
-      <svg viewBox="0 0 260 120" fill="none" className="h-24 w-auto text-ink" aria-hidden="true">
+      <svg viewBox="0 0 260 120" fill="none" className="h-full w-full text-ink" aria-hidden="true">
         <rect x="28" y="80" width="54" height="26" rx="4" stroke="currentColor" strokeWidth="2.5" />
         <rect x="88" y="80" width="54" height="26" rx="4" stroke="currentColor" strokeWidth="2.5" />
         <rect x="148" y="80" width="54" height="26" rx="4" stroke="currentColor" strokeWidth="2.5" />
@@ -99,9 +99,9 @@ const STEPS: Step[] = [
     num: "04",
     label: "Ship",
     heading: "Go live, get results.",
-    body: "I deploy your site, set up analytics, optimize for performance and test everything. Then we launch and make sure it's running smoothly.",
+    body: "I deploy your build, set up analytics, optimize for performance and test everything. Then we launch and make sure it's running smoothly.",
     art: (
-      <svg viewBox="0 0 260 120" fill="none" className="h-24 w-auto text-ink" aria-hidden="true">
+      <svg viewBox="0 0 260 120" fill="none" className="h-full w-full text-ink" aria-hidden="true">
         <path d="M30 98c26-4 52-13 76-30" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 7" strokeLinecap="round" />
         <path d="M212 16 118 56l32 10 5 28 17-21 25 10z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
         <path d="M150 66l56-44" stroke="currentColor" strokeWidth="2.5" />
@@ -119,7 +119,7 @@ const STEPS: Step[] = [
     heading: "Launch isn't the finish line.",
     body: "I hand over all the files, credentials and documentation you need. Then I check where visitors stop converting, and fix the leak.",
     art: (
-      <svg viewBox="0 0 260 120" fill="none" className="h-24 w-auto text-ink" aria-hidden="true">
+      <svg viewBox="0 0 260 120" fill="none" className="h-full w-full text-ink" aria-hidden="true">
         <path d="M34 98h192" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         <path d="M52 98V82M94 98V68M136 98V54M178 98V40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         <path d="M44 58c40-10 74-24 114-42" stroke="#6C4CF1" strokeWidth="3" strokeLinecap="round" />
@@ -174,7 +174,7 @@ export default function Process() {
         start: "top top",
         end: () => `+=${distance()}`,
         pin: true,
-        scrub: 1,
+        scrub: 1.4,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           if (markerRef.current) {
@@ -318,7 +318,7 @@ export default function Process() {
                       className="absolute -left-1.5 -top-1.5 z-10 h-3.5 w-3.5 rounded-full bg-accent ring-4 ring-bg"
                     />
                     <article className="flex flex-1 flex-col rounded-2xl border border-ink bg-surface p-5 shadow-[0_14px_30px_-16px_rgba(17,18,20,0.25)]">
-                      <div className="grid h-40 place-items-center overflow-hidden rounded-lg border border-line bg-bg">
+                      <div className="grid h-40 place-items-center overflow-hidden rounded-lg border border-line bg-bg p-5">
                         {step.art}
                       </div>
                       <h3 className="mt-5 font-display text-xl font-semibold text-ink">
@@ -404,7 +404,7 @@ export default function Process() {
             <span className="font-mono text-xs uppercase leading-relaxed tracking-[0.12em] text-muted">
               Better process.
               <br />
-              Better websites.
+              Better builds.
             </span>
           </p>
           <a

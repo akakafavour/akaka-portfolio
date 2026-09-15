@@ -114,15 +114,6 @@ export default function SiteHeader() {
           );
         })}
 
-        {/* Résumé — direct download, sits with the credentials slot */}
-        <a
-          href="/resume.pdf"
-          download
-          className="shrink-0 whitespace-nowrap rounded-full px-1.5 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.04em] text-bg/70 underline decoration-dotted decoration-bg/40 underline-offset-[6px] transition-colors hover:bg-accent hover:text-ink hover:decoration-ink sm:px-3 sm:text-xs sm:tracking-[0.08em]"
-        >
-          Résumé
-        </a>
-
         <a
           href="#contact"
           className="ml-1 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent-hover sm:ml-2 sm:px-4"
