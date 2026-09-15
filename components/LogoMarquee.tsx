@@ -10,15 +10,20 @@ import { useRef } from "react";
  * color + lift on hover. The whole band drifts a few pixels opposite the
  * mouse — a quiet parallax, pointer:fine only.
  */
+/* Tools he actually uses — code tools AND the marketing-side tools from
+   real client work (Analytics, Search Console, Resend). No Figma (not
+   used), no invented tools, no text chips — real logos only. */
 const TOOLS = [
   { file: "/logos/nextdotjs.svg", label: "Next.js" },
   { file: "/logos/react.svg", label: "React" },
   { file: "/logos/typescript.svg", label: "TypeScript" },
-  { file: "/logos/figma.svg", label: "Figma" },
   { file: "/logos/tailwindcss.svg", label: "Tailwind CSS" },
   { file: "/logos/nodedotjs.svg", label: "Node.js" },
   { file: "/logos/supabase.svg", label: "Supabase" },
   { file: "/logos/postgresql.svg", label: "PostgreSQL" },
+  { file: "/logos/googleanalytics.svg", label: "Google Analytics" },
+  { file: "/logos/searchconsole.svg", label: "Google Search Console" },
+  { file: "/logos/resend.svg", label: "Resend" },
   { file: "/logos/notion.svg", label: "Notion" },
   { file: "/logos/sanity.svg", label: "Sanity" },
   { file: "/logos/vercel.svg", label: "Vercel" },
@@ -58,7 +63,7 @@ export default function LogoMarquee() {
   return (
     <section
       aria-label="Tools and stack"
-      className="overflow-hidden border-t border-ink bg-pill py-12"
+      className="group overflow-hidden border-t border-ink bg-pill py-12"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >

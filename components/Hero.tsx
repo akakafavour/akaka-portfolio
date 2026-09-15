@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import BeforeSite from "./BeforeSite";
 import AfterSite from "./AfterSite";
 import ProjectLoop from "./ProjectLoop";
@@ -75,7 +75,7 @@ export default function Hero() {
       {/* Giant masked headline */}
       <h1
         id="hero-heading"
-        className="relative font-display text-[clamp(2.3rem,5.2vw,4.6rem)] font-semibold uppercase leading-[1.06] tracking-tight"
+        className="metallic relative font-display text-[clamp(2.3rem,5.2vw,4.6rem)] font-semibold uppercase leading-[1.06] tracking-tight"
       >
         <span className="block overflow-hidden pb-1">
           <motion.span className="block" {...lineReveal(0.15)}>
@@ -191,18 +191,14 @@ function BeforeAfterSlider() {
   const handleRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const posRef = useRef(100);
-
-  // The handle is scroll-driven: at rest the dated site fills the frame,
-  // scrolling through the hero reveals the modern side. Drag/keyboard give
-  // manual control until the next scroll movement. No self-movement.
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start 95%", "start 35%"],
-  });
+  const touched = useRef(false);
+  const [hinting, setHinting] = useState(false);
+  const reduce = useReducedMotion();
+  const inView = useInView(trackRef, { once: true, amount: 0.4 });
 
   const applyPos = (next: number) => {
-    // keep the handle on-frame (a fully clipped edge would half-hide it)
-    const clamped = Math.min(98, Math.max(2, next));
+    // full 0–100 range — drag far enough and one side is completely revealed
+    const clamped = Math.min(100, Math.max(0, next));
     posRef.current = clamped;
     if (beforeRef.current)
       beforeRef.current.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
@@ -217,14 +213,40 @@ function BeforeAfterSlider() {
     }
   };
 
+  // Affordance: the moment the slider enters the viewport, the divider runs
+  // one silent demo — glides toward the redesign and settles mid-frame — so
+  // visitors see what the handle does without being told. Stops instantly
+  // the moment they grab it. A soft ring pulse on the handle backs it up.
   useEffect(() => {
-    const unsub = scrollYProgress.on("change", (v) => {
-      applyPos(100 - v * 100);
-    });
-    applyPos(100 - scrollYProgress.get() * 100);
-    return unsub;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollYProgress]);
+    if (inView) setHinting(true);
+  }, [inView]);
+
+  useEffect(() => {
+    if (!inView || reduce) return;
+    const start = performance.now();
+    const D = 2600;
+    const ease = (x: number) =>
+      x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / D);
+      let p: number;
+      if (t < 0.45) p = 100 + (30 - 100) * ease(t / 0.45);
+      else if (t < 0.75) p = 30 + (55 - 30) * ease((t - 0.45) / 0.3);
+      else p = 55 + (46 - 55) * ease((t - 0.75) / 0.25);
+      if (!touched.current) applyPos(p);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, reduce]);
+
+  const markTouched = () => {
+    if (!touched.current) {
+      touched.current = true;
+      setHinting(false);
+    }
+  };
 
   const setFromClientX = (clientX: number) => {
     const rect = trackRef.current?.getBoundingClientRect();
@@ -244,6 +266,7 @@ function BeforeAfterSlider() {
         style={{ touchAction: "pan-y" }}
         onPointerDown={(e) => {
           dragging.current = true;
+          markTouched();
           e.currentTarget.setPointerCapture(e.pointerId);
           e.preventDefault();
           setFromClientX(e.clientX);
@@ -299,6 +322,7 @@ function BeforeAfterSlider() {
           aria-valuetext="100% of the old site visible"
           aria-orientation="horizontal"
           onKeyDown={(e) => {
+            markTouched();
             const step = e.shiftKey ? 10 : 4;
             if (e.key === "ArrowLeft") {
               e.preventDefault();
@@ -314,7 +338,9 @@ function BeforeAfterSlider() {
               applyPos(0);
             }
           }}
-          className="absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg"
+          className={`absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border-2 border-bg bg-ink text-bg shadow-lg ${
+            hinting ? "af-hint" : ""
+          }`}
           style={{ left: "100%" }}
         >
           <ChevronGrips className="h-[18px] w-[18px]" />

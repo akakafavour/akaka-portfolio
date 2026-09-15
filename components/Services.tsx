@@ -5,17 +5,17 @@ import { ArrowUpRight } from "./Arrows";
 import { ChatIcon, CodeIcon, DocIcon, PencilIcon, RocketIcon } from "./Glyphs";
 
 /**
- * Services (v11) — "job tickets": the studio metaphor made literal. Each
- * service is a work ticket on the studio board: mono index (SRVC-01…),
- * yellow index tab, clipped corner, alternating tilt that straightens on
- * hover. The revenue offer is the LEAK DOCKET: a full-width ink work
- * order with a barcode corner. No pills, no em dashes, no dev framing.
+ * Services (v12) — work orders: the studio ticket made physical. Each card
+ * is a real work order — case number, READY status stamp that stamps in on
+ * hover, barcode strip, perforated tear-off bottom edge. Copy is broad on
+ * purpose: sites, web apps, tools, automations, AI agent tooling — not a
+ * web-design menu. The revenue offer stays the LEAK DOCKET (unchanged).
  */
 const SERVICES = [
   {
     icon: <CodeIcon className="h-5 w-5" />,
     name: "Custom builds",
-    line: "Design, copy and code from one person. Sites, tools, whatever the project needs. Live in 7 to 10 days.",
+    line: "Design, copy and code from one person. Sites, web apps, internal tools, automations — whatever the project needs. Live in 7 to 10 days.",
   },
   {
     icon: <PencilIcon className="h-5 w-5" />,
@@ -29,10 +29,20 @@ const SERVICES = [
   },
   {
     icon: <DocIcon className="h-5 w-5" />,
-    name: "Web apps",
-    line: "Dashboards, portals, internal tools. Full-stack builds with auth and a real database.",
+    name: "Web apps & AI tooling",
+    line: "Dashboards, portals, internal tools, AI agent tooling. Full-stack builds with auth and a real database.",
   },
 ];
+
+/* Ticket perforation — a punched strip along the card's bottom edge:
+   round holes of the page background cut out of the card surface. */
+const PERFORATION_STYLE: React.CSSProperties = {
+  backgroundImage:
+    "radial-gradient(circle at 5px 3px, var(--color-bg) 2.6px, transparent 2.7px)",
+  backgroundSize: "12px 12px",
+  backgroundRepeat: "repeat-x",
+  backgroundPosition: "bottom center",
+};
 
 export default function Services() {
   return (
@@ -45,7 +55,7 @@ export default function Services() {
       <Reveal className="mt-8">
         <h2
           id="services-heading"
-          className="font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-tight tracking-tight"
+          className="metallic font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-tight tracking-tight"
         >
           What I take off your plate.
         </h2>
@@ -57,7 +67,7 @@ export default function Services() {
           <Reveal key={service.name} className="h-full">
             <Link
               href="#contact"
-              className={`group relative flex h-full flex-col border border-ink bg-surface p-6 pb-7 pr-7 transition-all duration-300 hover:-translate-y-1 hover:rotate-0 hover:shadow-[0_24px_48px_-24px_rgba(17,18,20,0.4)] sm:p-7 sm:pb-8 ${
+              className={`group relative flex h-full flex-col border border-ink bg-surface p-6 pb-9 pr-7 transition-all duration-300 hover:-translate-y-1 hover:rotate-0 hover:shadow-[0_24px_48px_-24px_rgba(17,18,20,0.4)] sm:p-7 sm:pb-10 ${
                 i % 2 === 0
                   ? "-rotate-[0.6deg] [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)]"
                   : "rotate-[0.6deg] [clip-path:polygon(16px_0,100%_0,100%_100%,0_100%,0_16px)]"
@@ -70,28 +80,59 @@ export default function Services() {
                   i % 2 === 0 ? "left-0" : "right-0"
                 }`}
               />
-              <span className="eyebrow mt-3 flex items-start justify-between text-muted">
+
+              {/* Work-order header: case number + READY stamp (stamps in on hover) */}
+              <span className="eyebrow mt-3 flex items-center justify-between text-muted">
                 <span className="pt-2">SRVC-0{i + 1}</span>
-                <span
-                  aria-hidden="true"
-                  className="grid h-10 w-10 place-items-center rounded-lg border border-ink bg-bg text-ink transition-colors duration-300 group-hover:bg-accent"
-                >
-                  {service.icon}
+                <span className="flex items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block -rotate-3 scale-125 rounded-sm border-2 border-accent-hover px-2 py-0.5 font-mono text-[0.6rem] font-medium uppercase tracking-[0.2em] text-accent-hover opacity-0 transition-all duration-200 ease-out group-hover:rotate-[-6deg] group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none"
+                  >
+                    Ready
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="grid h-10 w-10 place-items-center rounded-lg border border-ink bg-bg text-ink transition-colors duration-300 group-hover:bg-accent"
+                  >
+                    {service.icon}
+                  </span>
                 </span>
               </span>
+
               <span className="mt-4 block font-display text-[1.35rem] font-semibold leading-snug text-ink">
                 {service.name}
               </span>
               <span className="mt-2.5 block text-sm leading-relaxed text-muted">
                 {service.line}
               </span>
-              <span className="mt-auto inline-flex items-center gap-1.5 pt-6 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-muted transition-colors group-hover:text-ink">
-                Open a ticket
-                <ArrowUpRight
+
+              {/* Work-order footer: barcode + CTA, above the perforated edge */}
+              <span className="mt-auto inline-flex items-end justify-between gap-4 pt-6">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-muted transition-colors group-hover:text-ink">
+                  Open a ticket
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </span>
+                <span
                   aria-hidden="true"
-                  className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  className="h-7 w-24 shrink-0 opacity-25 transition-opacity duration-300 group-hover:opacity-50"
+                  style={{
+                    backgroundImage:
+                      "repeating-linear-gradient(to right, currentColor 0 2px, transparent 2px 5px, currentColor 5px 6px, transparent 6px 11px)",
+                    color: "var(--color-ink)",
+                  }}
                 />
               </span>
+
+              {/* Perforated tear-off edge — the ticket bottom */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-3"
+                style={PERFORATION_STYLE}
+              />
             </Link>
           </Reveal>
         ))}

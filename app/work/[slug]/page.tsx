@@ -95,9 +95,6 @@ export default async function WorkPage({
             Visit the live site
             <ArrowUpRight className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          <span className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted">
-            {project.urlLabel}
-          </span>
           <span className="ml-auto hidden gap-2 sm:flex">
             {project.stack.slice(0, 3).map((tech) => (
               <span
