@@ -75,19 +75,24 @@ export default function Hero() {
       {/* Giant masked headline */}
       <h1
         id="hero-heading"
-        className="relative font-display text-[clamp(2.75rem,8vw,6.5rem)] font-semibold uppercase leading-[1.02] tracking-tight"
+        className="relative font-display text-[clamp(2.3rem,5.2vw,4.6rem)] font-semibold uppercase leading-[1.06] tracking-tight"
       >
         <span className="block overflow-hidden pb-1">
           <motion.span className="block" {...lineReveal(0.15)}>
-            Your website{" "}
+            What you build{" "}
             <Asterisk className="mx-[0.02em] inline-block h-[0.58em] w-[0.58em] -translate-y-[0.03em] text-violet" />{" "}
-            Should
+            should
+          </motion.span>
+        </span>
+        <span className="block overflow-hidden pb-1">
+          <motion.span className="block" {...lineReveal(0.26)}>
+            make you money,
           </motion.span>
         </span>
         <span className="block overflow-hidden pb-3">
-          <motion.span className="block" {...lineReveal(0.28)}>
+          <motion.span className="block" {...lineReveal(0.37)}>
             <span className="relative inline-block">
-              Bring you work.
+              not just look good.
               <ScribbleUnderline className="absolute -bottom-3 left-0 w-full text-accent" />
             </span>
           </motion.span>
@@ -103,7 +108,7 @@ export default function Hero() {
           className="xl:absolute xl:left-0 xl:top-1/2 xl:z-10 xl:max-w-[200px] xl:-translate-y-1/2"
         >
           <p className="font-mono text-xs uppercase leading-loose tracking-[0.12em] text-muted">
-            Full-stack developer &amp; designer — Port Harcourt, Nigeria
+            Full-stack developer. I build things, then make them work.
           </p>
           <a
             href="#work"
@@ -118,7 +123,7 @@ export default function Hero() {
           initial={reduce || !revealed ? { opacity: 0, scale: 0.96 } : false}
           animate={revealed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
           transition={{ ...SPRING, delay: revealed ? 0.25 : 0 }}
-          className="relative mx-auto max-w-3xl"
+          className="relative mx-auto max-w-3xl xl:ml-auto xl:max-w-[660px]"
         >
           {/* Giant yellow disc — parallax on scroll */}
           <motion.div
@@ -133,9 +138,9 @@ export default function Hero() {
             className="absolute -right-4 -top-28 z-10 hidden w-44 sm:block"
           >
             <p className="font-hand text-[1.7rem] leading-[1.02] text-ink">
-              real projects.
+              before →
               <br />
-              real results.
+              after.
             </p>
             <HandArrow className="ml-16 mt-1 w-12 rotate-[8deg] text-ink" />
           </div>
@@ -143,8 +148,7 @@ export default function Hero() {
           <BeforeAfterSlider />
 
           <p className="eyebrow mt-4 text-muted">
-            Fictional demo — drag the handle. This is what I do to dated
-            websites.
+            Sample redesign. Drag the handle.
           </p>
         </motion.div>
 

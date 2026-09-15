@@ -1,25 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { CONTACT_EMAIL } from "./Footer";
 import SectionEyebrow from "./SectionEyebrow";
 
-const WHATSAPP_URL = "https://wa.me/REPLACE_WITH_NUMBER";
-const EMAIL_URL = "mailto:[AKAKA-EMAIL]";
-const X_URL = "https://x.com/[X-HANDLE]";
 const GITHUB_URL = "https://github.com/Akakaui";
-const LINKEDIN_URL = "https://www.linkedin.com/";
-const FORM_ENDPOINT = "[FORM-ENDPOINT]";
+const X_URL = "https://x.com/AkakaFavour";
 
 const CHANNELS = [
-  { label: "WhatsApp", value: "Fastest reply", href: WHATSAPP_URL, icon: "/icons/whatsapp.svg", external: true },
-  { label: "Email", value: "[AKAKA-EMAIL]", href: EMAIL_URL, icon: "/icons/gmail.svg", external: false },
-  { label: "X", value: "@[X-HANDLE]", href: X_URL, icon: "/icons/x.svg", external: true },
+  { label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, icon: "/icons/gmail.svg", external: false },
+  { label: "X", value: "@AkakaFavour", href: X_URL, icon: "/icons/x.svg", external: true },
   { label: "GitHub", value: "github.com/Akakaui", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
-  { label: "LinkedIn", value: "Connect with me", href: LINKEDIN_URL, icon: "/icons/linkedin.svg", external: true },
 ];
 
 /**
  * Contact — v6 redesign: split layout. Left carries the pitch (big type,
  * response promise, channels with real brand icons); right is the elevated
- * form (posts to [FORM-ENDPOINT], mailto fallback). No channel color-coding.
+ * form. No backend yet, so the form composes a prefilled email via mailto.
  */
 export default function Contact() {
   return (
@@ -42,9 +39,9 @@ export default function Contact() {
             <AsteriskMark />
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-muted">
-            One message is enough. Send your business name and what you want
-            the site to do — you get an honest answer on price, timeline and
-            the first thing I&apos;d fix, usually the same day.
+            One message is enough. Send your business name and what you&apos;re
+            trying to fix or build. You get an honest answer on price,
+            timeline and the first thing I&apos;d fix, usually the same day.
           </p>
 
           <p className="eyebrow mt-10 text-muted">Or just say hi</p>
@@ -77,12 +74,25 @@ export default function Contact() {
             ))}
           </div>
           <p className="eyebrow mt-5 leading-relaxed text-muted">
-            Whichever channel you pick, you get me — not a form queue.
+            Whichever channel you pick, you get me, not a form queue.
           </p>
         </div>
 
         {/* Right — the form */}
-        <form action={FORM_ENDPOINT} method="POST" className="grid content-start gap-4 rounded-2xl border border-ink bg-surface p-6 shadow-[0_24px_48px_-28px_rgba(17,18,20,0.3)] sm:p-8">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = new FormData(e.currentTarget);
+            const subject = encodeURIComponent(
+              `Project inquiry from ${data.get("name") ?? "someone"}`,
+            );
+            const body = encodeURIComponent(
+              `${data.get("message") ?? ""}\n\n— ${data.get("name") ?? ""}\n${data.get("email") ?? ""}`,
+            );
+            window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+          }}
+          className="grid content-start gap-4 rounded-2xl border border-ink bg-surface p-6 shadow-[0_24px_48px_-28px_rgba(17,18,20,0.3)] sm:p-8"
+        >
           <div className="grid gap-1.5">
             <label htmlFor="contact-name" className="eyebrow text-muted">
               Name
@@ -126,17 +136,17 @@ export default function Contact() {
           </div>
           <button
             type="submit"
-            className="on-accent mt-1 w-fit rounded-full bg-accent px-8 py-3.5 font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover"
+            className="on-accent mt-1 w-fit rounded-full bg-accent px-8 py-3.5 font-semibold text-pill transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover"
           >
             Send message
           </button>
           <p className="eyebrow leading-relaxed text-muted">
-            Form not working? Email me directly:{" "}
+            Hate forms? Email me directly:{" "}
             <a
-              href={EMAIL_URL}
-              className="text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-pill underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
             >
-              [AKAKA-EMAIL]
+              {CONTACT_EMAIL}
             </a>
           </p>
         </form>

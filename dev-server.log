@@ -1,0 +1,386 @@
+
+> akaka-favour-portfolio@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.25
+   - Local:        http://localhost:3000
+   - Network:      http://10.166.160.191:3000
+
+ ✓ Starting...
+ ✓ Ready in 14.2s
+ ○ Compiling / ...
+Request timed out after 3000ms
+
+Retrying 1/3...
+Request timed out after 3000ms
+
+Retrying 1/3...
+Request timed out after 3000ms
+
+Retrying 1/3...
+ ✓ Compiled / in 30.5s (1542 modules)
+ GET / 200 in 18749ms
+ GET / 200 in 5530ms
+ GET / 200 in 737ms
+ ○ Compiling /work/[slug] ...
+ ✓ Compiled /work/[slug] in 3.6s (1543 modules)
+ GET / 200 in 653ms
+ GET / 200 in 653ms
+ GET /work/vartex 200 in 8273ms
+ GET / 200 in 1799ms
+ GET /work/vartex 200 in 990ms
+ GET / 200 in 865ms
+ GET /work/oivs 200 in 223ms
+ GET /work/vartex 200 in 610ms
+ GET / 200 in 174ms
+ GET /work/munachi 200 in 277ms
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1505274125'
+}
+ GET / 200 in 1369ms
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1505274125'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '2068089378'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '2068089378'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '2068089378'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1505274125'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1505274125'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '721343745'
+}
+ ⨯ Error: Could not find the module "C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1505274125'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ○ Compiling /_error ...
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled /_error in 10.5s (1876 modules)
+ GET / 500 in 21296ms
+ ⨯ Failed to generate static paths for /work/[slug]:
+[Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET / 200 in 9120ms
+ GET /work/vartex 200 in 8793ms
+ GET / 200 in 2240ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 2126ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 1583ms
+ GET / 200 in 843ms
+ GET / 200 in 540ms
+ GET / 200 in 930ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET / 200 in 1019ms
+ GET /work/vartex 500 in 4446ms
+ GET / 200 in 1539ms
+ GET /work/vartex 200 in 1485ms
+ GET /work/vartex 200 in 1489ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET / 200 in 1373ms
+ GET / 200 in 1021ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 3052ms
+ GET / 200 in 1391ms
+ GET /work/vartex 200 in 1501ms
+ GET /work/vartex 200 in 1436ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET / 200 in 1307ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.2s (1881 modules)
+ GET /sw.js 404 in 3238ms
+ GET / 200 in 1417ms
+ GET / 200 in 583ms
+ GET / 200 in 1089ms
+ GET / 200 in 1086ms
+ GET / 200 in 839ms
+ GET / 200 in 897ms
+ ✓ Compiled in 2.4s (1890 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /work/vartex 200 in 29ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 2617ms
+ ✓ Compiled in 3s (1890 modules)
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 1870ms
+ GET / 200 in 1501ms
+ GET / 200 in 644ms
+ GET / 200 in 1471ms
+ GET / 200 in 865ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 3496ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 1546ms
+ GET /work/vartex 500 in 1469ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET /work/vartex 500 in 2394ms
+ GET /work/vartex 200 in 1502ms
+ GET /work/vartex 200 in 1475ms
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/motion-dom.js'
+Require stack:
+- C:\Users\Owner\Documents\portfolio website\.next\server\webpack-runtime.js
+- C:\Users\Owner\Documents\portfolio website\.next\server\app\work\[slug]\page.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\require.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\load-components.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\build\utils.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\Owner\Documents\portfolio website\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/work/vartex'
+}
+ GET / 200 in 1460ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 5.5s (1895 modules)
+ GET /sw.js 404 in 7960ms
+[?25h

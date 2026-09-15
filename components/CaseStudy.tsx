@@ -95,7 +95,7 @@ export default function CaseStudy() {
           href={VARTEX_URL}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center justify-center gap-1.5 rounded-full border border-ink px-6 py-3.5 font-semibold text-ink transition-colors hover:bg-ink hover:text-bg"
+          className="group inline-flex items-center justify-center gap-1.5 rounded-full border border-ink px-6 py-3.5 font-semibold text-ink transition-colors hover:bg-pill hover:text-on-ink"
         >
           View the live site
           <span

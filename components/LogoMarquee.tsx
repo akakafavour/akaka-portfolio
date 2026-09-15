@@ -4,19 +4,22 @@
 import { useRef } from "react";
 
 /**
- * LogoMarquee — Patrick-David-style bottom band (v8): the 12 tool logos in
- * an infinite duplicated marquee on ink, dimmed to white silhouettes by
- * default, full brand color + lift on hover. The whole band drifts a few
- * pixels opposite the mouse — a quiet parallax, pointer:fine only.
+ * LogoMarquee — the workshop band (v9): every line of work gets its tools
+ * on the wall — code (Next.js, React…), design (Figma), writing (Notion) —
+ * in one slow seamless loop on ink. Silhouettes by default, full brand
+ * color + lift on hover. The whole band drifts a few pixels opposite the
+ * mouse — a quiet parallax, pointer:fine only.
  */
 const TOOLS = [
   { file: "/logos/nextdotjs.svg", label: "Next.js" },
   { file: "/logos/react.svg", label: "React" },
   { file: "/logos/typescript.svg", label: "TypeScript" },
+  { file: "/logos/figma.svg", label: "Figma" },
   { file: "/logos/tailwindcss.svg", label: "Tailwind CSS" },
   { file: "/logos/nodedotjs.svg", label: "Node.js" },
   { file: "/logos/supabase.svg", label: "Supabase" },
   { file: "/logos/postgresql.svg", label: "PostgreSQL" },
+  { file: "/logos/notion.svg", label: "Notion" },
   { file: "/logos/sanity.svg", label: "Sanity" },
   { file: "/logos/vercel.svg", label: "Vercel" },
   { file: "/logos/framer.svg", label: "Framer Motion" },
@@ -55,15 +58,23 @@ export default function LogoMarquee() {
   return (
     <section
       aria-label="Tools and stack"
-      className="overflow-hidden border-t border-ink bg-ink py-12"
+      className="overflow-hidden border-t border-ink bg-pill py-12"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       <p className="eyebrow mx-auto mb-8 w-full max-w-6xl px-4 text-muted sm:px-6">
-        Three years in. The tools that ship.
+        The workshop — every line of work, its tools.
       </p>
       <div ref={driftRef} className="transition-transform duration-300 ease-out">
-        <div className="flex w-max animate-[projectloop_30s_linear_infinite] motion-reduce:animate-none">
+        <div
+          className="flex w-max animate-[projectloop_44s_linear_infinite] will-change-transform motion-reduce:animate-none group-hover:[animation-play-state:paused]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          }}
+        >
           {row(false)}
           {row(true)}
         </div>

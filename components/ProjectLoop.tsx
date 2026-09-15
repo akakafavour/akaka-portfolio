@@ -1,44 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { PROJECTS } from "@/lib/projects";
+import SectionEyebrow from "./SectionEyebrow";
 import { ArrowUpRight } from "./Arrows";
 
 /**
- * ProjectLoop — the fan strip, rebuilt (v7): the three projects as proper
- * browser-framed cards in a continuously drifting infinite row. Slight
- * alternating tilt keeps the fan energy; hover pauses the drift, straightens
- * and lifts the card. Click → the project's case page. Seamless loop via a
- * duplicated half translated -50%; reduced motion freezes the drift.
+ * Work (v8.2) — THE work section: "Here's what I've been up to." heading +
+ * the projects as white tablet-bezel cards in a continuously drifting
+ * infinite row. Cards sit straight (no tilt), pause on hover, and open
+ * their case pages. bg-surface keeps the bezels visible in dark mode.
  */
 export default function ProjectLoop() {
   const half = (ariaHidden: boolean) => (
     <div className="flex shrink-0 gap-8 pr-8" aria-hidden={ariaHidden}>
-      {PROJECTS.map((project, i) => (
+      {PROJECTS.map((project) => (
         <Link
-          key={`${project.slug}-${i}`}
+          key={`${project.slug}-${ariaHidden}`}
           href={`/work/${project.slug}`}
           tabIndex={ariaHidden ? -1 : 0}
-          className={`group relative block w-[320px] shrink-0 transition-transform duration-300 hover:z-10 hover:rotate-0 hover:-translate-y-2 sm:w-[380px] ${
-            i % 2 === 0 ? "-rotate-[2.5deg]" : "rotate-[2.5deg]"
-          }`}
+          className="group relative block w-[320px] shrink-0 transition-transform duration-300 hover:-translate-y-2 sm:w-[380px]"
         >
-          <div className="overflow-hidden rounded-xl border border-ink bg-surface shadow-[0_18px_40px_-18px_rgba(17,18,20,0.35)] transition-shadow duration-300 group-hover:shadow-[0_28px_56px_-22px_rgba(17,18,20,0.4)]">
-            <div className="flex items-center gap-3 border-b border-line bg-bg px-4 py-2.5">
-              <div className="flex gap-1.5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              </div>
-              <span className="eyebrow flex-1 truncate rounded-full border border-line bg-surface px-3 py-1 text-muted">
-                {project.urlLabel}
-              </span>
+          {/* White tablet bezel — Honour-style frame, straight */}
+          <div className="relative rounded-[1.5rem] border border-line bg-surface p-2.5 shadow-[0_24px_50px_-24px_rgba(17,18,20,0.4)] transition-shadow duration-300 group-hover:shadow-[0_34px_64px_-26px_rgba(17,18,20,0.55)]">
+            <span aria-hidden="true" className="absolute left-2 top-2 h-1 w-1 rounded-full bg-muted/40" />
+            <span aria-hidden="true" className="absolute right-2 top-2 h-1 w-1 rounded-full bg-muted/40" />
+            <span aria-hidden="true" className="absolute bottom-2 left-2 h-1 w-1 rounded-full bg-muted/40" />
+            <span aria-hidden="true" className="absolute bottom-2 right-2 h-1 w-1 rounded-full bg-muted/40" />
+            <div className="overflow-hidden rounded-[1rem] border border-line">
+              <img
+                src={project.image}
+                alt={ariaHidden ? "" : `${project.name} website screenshot`}
+                className="h-auto w-full"
+                loading="lazy"
+              />
             </div>
-            <img
-              src={project.image}
-              alt={ariaHidden ? "" : `${project.name} website screenshot`}
-              className="h-auto w-full"
-              loading="lazy"
-            />
           </div>
           <div className="mt-4 flex items-center justify-between gap-3">
             <span className="font-display text-lg font-semibold text-ink">
@@ -51,29 +46,56 @@ export default function ProjectLoop() {
               <ArrowUpRight className="text-sm" />
             </span>
           </div>
+          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted">
+            {project.outcome}
+          </p>
         </Link>
       ))}
     </div>
   );
 
   return (
-    <div
-      aria-label="Selected work — opens the project pages"
-      className="group relative mt-20 overflow-x-clip py-4"
+    <section
+      id="work"
+      aria-labelledby="work-heading"
+      className="relative scroll-mt-24 py-20 sm:py-24"
     >
-      {/* Edge fades */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-bg to-transparent sm:w-28"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-bg to-transparent sm:w-28"
-      />
-      <div className="flex w-max animate-[projectloop_38s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
-        {half(false)}
-        {half(true)}
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+        <SectionEyebrow label="/ My work" />
+        <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
+          <h2
+            id="work-heading"
+            className="metallic font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-tight tracking-tight"
+          >
+            Here&apos;s what I&apos;ve been up to.
+          </h2>
+          <a
+            href="https://github.com/Akakaui"
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+          >
+            View all projects
+            <ArrowUpRight className="inline-block transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        </div>
       </div>
-    </div>
+
+      <div className="group relative mt-12 overflow-x-clip py-4">
+        {/* Edge fades — kept minimal, just enough to hint the loop */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-bg to-transparent opacity-60 sm:w-14"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-bg to-transparent opacity-60 sm:w-14"
+        />
+        <div className="flex w-max animate-[projectloop_38s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+          {half(false)}
+          {half(true)}
+        </div>
+      </div>
+    </section>
   );
 }

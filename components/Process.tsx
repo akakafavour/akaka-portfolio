@@ -72,12 +72,12 @@ const STEPS: Step[] = [
   },
   {
     num: "05",
-    label: "Handoff",
-    heading: "You're in control.",
-    body: "I deliver all the files, credentials and documentation you need. Plus, I'm always here if you need updates or support.",
+    label: "Grow",
+    heading: "Launch isn't the finish line.",
+    body: "I hand over all the files, credentials and documentation you need. Then I check where visitors stop converting, and fix the leak.",
     image: "/assets/pipeline-handoff.png",
     icon: <DocIcon className="h-[18px] w-[18px]" />,
-    days: "1 day",
+    days: "Ongoing",
   },
 ];
 
@@ -95,12 +95,13 @@ export default function Process() {
   const markerRef = useRef<HTMLSpanElement>(null);
   const tickRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const dragState = useRef<{ x: number; y: number } | null>(null);
-  const [mode, setMode] = useState<"snap" | "gsap">("snap");
+  const [mode, setMode] = useState<"snap" | "gsap">("gsap");
 
   useEffect(() => {
-    const mq = window.matchMedia(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)"
-    );
+    // The pinned horizontal experience on EVERY screen — touch scrolling
+    // drives ScrollTrigger scrub natively. Only reduced motion falls back
+    // to the swipe row.
+    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)");
     const apply = () => setMode(mq.matches ? "gsap" : "snap");
     apply();
     mq.addEventListener("change", apply);
@@ -177,7 +178,7 @@ export default function Process() {
       id="process"
       ref={sectionRef}
       aria-labelledby="process-heading"
-      className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg lg:h-screen"
+      className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg min-h-screen lg:h-screen"
     >
       <div className="flex h-full flex-col py-14 lg:py-8">
         <div className="mx-auto w-full max-w-6xl shrink-0 px-4 sm:px-6">
@@ -200,7 +201,7 @@ export default function Process() {
           {/* Giant outlined display title — violet SVG asterisk replaces the I */}
           <h2
             id="process-heading"
-            className="text-center font-display text-[clamp(3.25rem,11vw,9rem)] font-semibold uppercase leading-none tracking-[0.04em] text-transparent [-webkit-text-stroke:2px_#111214]"
+            className="metallic text-center font-display text-[clamp(3.25rem,11vw,9rem)] font-semibold uppercase leading-none tracking-[0.04em] text-transparent [-webkit-text-stroke:2px_var(--color-ink)]"
           >
             The P
             <Asterisk
@@ -313,7 +314,7 @@ export default function Process() {
             ))}
             <span
               ref={markerRef}
-              className={`absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink ring-4 ring-bg ${
+              className={`absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pill ring-4 ring-bg ${
                 mode === "gsap" ? "" : "hidden"
               }`}
               style={{ left: "8%" }}
@@ -333,7 +334,7 @@ export default function Process() {
                 type="button"
                 onClick={() => scrollByCard(-1)}
                 aria-label="Previous step"
-                className="grid h-11 w-11 place-items-center rounded-full border border-ink bg-surface text-ink transition-colors hover:bg-ink hover:text-bg"
+                className="grid h-11 w-11 place-items-center rounded-full border border-ink bg-surface text-ink transition-colors hover:bg-pill hover:text-on-ink"
               >
                 <span aria-hidden="true">←</span>
               </button>
@@ -341,7 +342,7 @@ export default function Process() {
                 type="button"
                 onClick={() => scrollByCard(1)}
                 aria-label="Next step"
-                className="grid h-11 w-11 place-items-center rounded-full border border-ink bg-surface text-ink transition-colors hover:bg-ink hover:text-bg"
+                className="grid h-11 w-11 place-items-center rounded-full border border-ink bg-surface text-ink transition-colors hover:bg-pill hover:text-on-ink"
               >
                 <span aria-hidden="true">→</span>
               </button>
@@ -361,7 +362,7 @@ export default function Process() {
           </p>
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-pill underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-hover"
           >
             Let&apos;s build something great
             <span

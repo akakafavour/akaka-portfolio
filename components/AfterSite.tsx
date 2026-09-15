@@ -17,16 +17,16 @@ export default function AfterSite() {
     >
       {/* Clean nav */}
       <div className="flex items-center justify-between px-[3cqw] py-[1.7cqw]">
-        <span className="flex items-center gap-[0.8cqw] text-[2cqw] font-semibold tracking-tight">
+        <span className="flex items-center gap-[0.8cqw] text-[2cqw] max-sm:text-[2.9cqw] font-semibold tracking-tight">
           <span className="inline-block h-[1.4cqw] w-[1.4cqw] rounded-full bg-violet" />
           BloomHarbor
         </span>
-        <span className="flex items-center gap-[2.4cqw] text-[1.4cqw] text-muted">
+        <span className="flex items-center gap-[2.4cqw] text-[1.4cqw] max-sm:text-[2cqw] max-sm:text-[2.9cqw] text-muted">
           <span>Home</span>
           <span>About</span>
           <span>Services</span>
           <span>Contact</span>
-          <span className="rounded-full bg-ink px-[1.8cqw] py-[0.7cqw] text-bg">
+          <span className="rounded-full bg-pill px-[1.8cqw] py-[0.7cqw] text-on-ink">
             Get Started
           </span>
         </span>
@@ -40,16 +40,16 @@ export default function AfterSite() {
             <br />
             for <span className="text-violet">growing brands.</span>
           </p>
-          <p className="mt-[1.5cqw] max-w-[36cqw] text-[1.7cqw] leading-relaxed text-muted">
+          <p className="mt-[1.5cqw] max-w-[36cqw] text-[1.7cqw] max-sm:text-[2.4cqw] leading-relaxed text-muted">
             We help businesses build powerful websites, automate workflows and
             turn ideas into real growth.
           </p>
           <div className="mt-[2.3cqw] flex items-center gap-[2.2cqw]">
-            <span className="flex items-center gap-[0.9cqw] rounded-full bg-[#a3e635] px-[2.6cqw] py-[1.2cqw] text-[1.65cqw] font-medium text-ink">
+            <span className="flex items-center gap-[0.9cqw] rounded-full bg-[#a3e635] px-[2.6cqw] py-[1.2cqw] text-[1.65cqw] max-sm:text-[2.4cqw] font-medium text-ink">
               Get Started
               <ArrowRight className="h-[1.5cqw] w-[1.5cqw]" />
             </span>
-            <span className="flex items-center gap-[0.9cqw] text-[1.65cqw] text-ink">
+            <span className="flex items-center gap-[0.9cqw] text-[1.65cqw] max-sm:text-[2.4cqw] text-ink">
               <span className="grid h-[2.9cqw] w-[2.9cqw] place-items-center rounded-full border border-ink/30">
                 <svg
                   viewBox="0 0 10 10"

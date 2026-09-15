@@ -1,9 +1,8 @@
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
-import Work from "@/components/Work";
-import CaseStudy from "@/components/CaseStudy";
 import About from "@/components/About";
+import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import LogoMarquee from "@/components/LogoMarquee";
@@ -14,7 +13,7 @@ export default function Page() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-pill focus:px-4 focus:py-2 focus:text-on-ink"
       >
         Skip to content
       </a>
@@ -33,28 +32,11 @@ export default function Page() {
       />
 
       <div className="relative">
-        {/* 01–04 page ruler — left edge, desktop only */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-4 hidden xl:block"
-        >
-          <div className="absolute inset-y-0 left-0 border-l border-line" />
-          <div className="relative flex h-full flex-col justify-between py-40">
-            {["01", "02", "03", "04"].map((n) => (
-              <div key={n} className="flex items-center gap-2">
-                <span className="h-px w-3 bg-line" />
-                <span className="font-mono text-[0.65rem] text-muted">{n}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <main id="main">
           <Hero />
           <Marquee />
-          <Work />
-          <CaseStudy />
           <About />
+          <Services />
           <Process />
           <Contact />
         </main>

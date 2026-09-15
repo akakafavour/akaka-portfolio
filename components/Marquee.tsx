@@ -6,6 +6,7 @@
  */
 const ITEMS = [
   "// Freelance developer",
+  "// Built to convert",
   "// Modern websites",
   "// Fast turnaround",
 ];
@@ -32,7 +33,7 @@ export default function Marquee() {
             {ITEMS.map((item) => (
               <li
                 key={item}
-                className="flex items-center whitespace-nowrap font-mono text-xs font-medium uppercase tracking-[0.14em] text-ink"
+                className="flex items-center whitespace-nowrap font-mono text-xs font-medium uppercase tracking-[0.14em] text-pill"
               >
                 <span className="px-4">{item}</span>
                 <span aria-hidden="true" className="px-1">

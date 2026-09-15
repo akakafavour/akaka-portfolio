@@ -54,6 +54,11 @@
      Never for text or links. */
   --color-violet: #6c4cf1;
 
+  /* Non-flipping chrome tokens: the nav pill stays ink-dark and its label
+     stays paper-light in BOTH themes. */
+  --color-pill: #111214;
+  --color-on-ink: #f5f3ec;
+
   /* JetBrains Mono arrives via next/font as --font-jetbrains (app/layout.tsx);
      Caveat arrives as --font-caveat for handwritten annotation fallbacks. */
   --font-display: "Clash Display", system-ui, ui-sans-serif, sans-serif;
@@ -65,6 +70,18 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Dark theme — same structure, night palette. Flips the semantic tokens
+     (bg/surface/text/muted/line/ink); pill, on-ink, accent and violet stay. */
+  .dark {
+    --color-bg: #0e0e11;
+    --color-surface: #16171c;
+    --color-ink: #f0eee6; /* high-contrast color flips: borders, chips, outlines */
+    --color-text: #f0eee6;
+    --color-muted: #a3a7ad;
+    --color-line: #2a2c33;
+    --color-accent-hover: #ffc61a;
   }
 
   body {
@@ -116,6 +133,45 @@
   pointer-events: none;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Metallic display text — slow gold sheen in light mode, chrome in dark.
+   Falls back to solid ink if background-clip:text is unsupported. */
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+.metallic {
+  color: var(--color-ink);
+  background-image: linear-gradient(
+    100deg,
+    #8a6d1d 20%,
+    #f2b705 40%,
+    #fff3c4 50%,
+    #f2b705 60%,
+    #8a6d1d 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+.dark .metallic {
+  background-image: linear-gradient(
+    100deg,
+    #8e929c 20%,
+    #e8eaef 40%,
+    #ffffff 50%,
+    #e8eaef 60%,
+    #8e929c 80%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .metallic {
+    animation: none;
+  }
 }
 
 /* Ticker + any continuous strip — slow, linear, seamless. */

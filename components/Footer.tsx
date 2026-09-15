@@ -4,16 +4,15 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Asterisk } from "./Glyphs";
 
-const EMAIL_URL = "mailto:[AKAKA-EMAIL]";
-const X_URL = "https://x.com/[X-HANDLE]";
+const X_URL = "https://x.com/AkakaFavour";
 const GITHUB_URL = "https://github.com/Akakaui";
-const WHATSAPP_URL = "https://wa.me/REPLACE_WITH_NUMBER";
+// TODO(Akaka): replace with the real address — one constant, used site-wide.
+export const CONTACT_EMAIL = "hello@akaka-favour.com";
 
 const LINKS = [
-  { label: "Email", href: EMAIL_URL, icon: "/icons/gmail.svg", external: false },
-  { label: "X", href: X_URL, icon: "/icons/x.svg", external: true },
+  { label: "Email", href: `mailto:${CONTACT_EMAIL}`, icon: "/icons/gmail.svg", external: false },
   { label: "GitHub", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
-  { label: "WhatsApp", href: WHATSAPP_URL, icon: "/icons/whatsapp.svg", external: true },
+  { label: "X", href: X_URL, icon: "/icons/x.svg", external: true },
 ];
 
 /**
@@ -48,16 +47,16 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-ink bg-ink">
+    <footer className="border-t border-ink bg-pill">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_1fr_auto]">
-        <p className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-bg">
+        <p className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-on-ink">
           <Asterisk
             aria-hidden="true"
             className="mr-1 inline-block h-[0.55em] w-[0.55em] -translate-y-[0.05em] text-accent"
           />{" "}
           Let&apos;s Build Something Great
         </p>
-        <p className="max-w-xs text-sm leading-relaxed text-bg/70">
+        <p className="max-w-xs text-sm leading-relaxed text-on-ink/70">
           Got a project, idea, or just want to say hi? I&apos;m always open to
           new opportunities and collaborations.
         </p>
@@ -94,7 +93,7 @@ export default function Footer() {
               {...(link.external
                 ? { target: "_blank", rel: "noreferrer" }
                 : {})}
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted transition-colors hover:text-bg"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted transition-colors hover:text-on-ink"
             >
               <img
                 src={link.icon}

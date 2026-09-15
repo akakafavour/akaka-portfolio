@@ -139,7 +139,7 @@ export default function Preloader() {
           }
           transition={{ duration: 0.35 }}
         >
-          websites that bring you work.
+          i build things — then make them work.
         </motion.p>
       </div>
 

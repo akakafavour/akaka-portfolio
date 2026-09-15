@@ -6,63 +6,11 @@ import HandAsset from "./HandAsset";
 import Reveal from "./Reveal";
 import { Asterisk, HandArrow } from "./Glyphs";
 
-const WHATSAPP_URL = "https://wa.me/REPLACE_WITH_NUMBER";
-const EMAIL_URL = "mailto:[AKAKA-EMAIL]";
-const X_URL = "https://x.com/[X-HANDLE]";
 const GITHUB_URL = "https://github.com/Akakaui";
 
-const SERVICES = [
-  { name: "Custom Website Development", icon: "bolt" },
-  { name: "Landing Pages & Funnels", icon: "code" },
-  { name: "Web App Development", icon: "layers" },
-  { name: "UI/UX Design & Redesign", icon: "sparkles" },
-] as const;
-
-function ServiceIcon({ name }: { name: (typeof SERVICES)[number]["icon"] }) {
-  const common = {
-    width: 18,
-    height: 18,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.8,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true,
-  };
-  if (name === "bolt")
-    return (
-      <svg {...common}>
-        <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
-      </svg>
-    );
-  if (name === "code")
-    return (
-      <svg {...common}>
-        <path d="m8 7-5 5 5 5M16 7l5 5-5 5" />
-      </svg>
-    );
-  if (name === "layers")
-    return (
-      <svg {...common}>
-        <path d="m12 2 9 5-9 5-9-5 9-5z" />
-        <path d="m3 12 9 5 9-5" />
-        <path d="m3 17 9 5 9-5" />
-      </svg>
-    );
-  return (
-    <svg {...common}>
-      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
-      <circle cx="12" cy="12" r="3.5" />
-    </svg>
-  );
-}
-
 const CONTACT_ROWS = [
-  { icon: "mail", label: "[AKAKA-EMAIL]", href: EMAIL_URL, external: false },
-  { icon: "pin", label: "Port Harcourt, Nigeria (Remote OK)" },
   { icon: "github", label: "github.com/Akakaui", href: GITHUB_URL, external: true },
-  { icon: "x", label: "x.com/[X-HANDLE]", href: X_URL, external: true },
+  { icon: "x", label: "x.com/AkakaFavour", href: "https://x.com/AkakaFavour", external: true },
 ];
 
 function ContactIcon({ name }: { name: string }) {
@@ -120,7 +68,7 @@ export default function About() {
       className="border-y border-line bg-surface/60"
     >
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1.15fr_0.9fr_0.95fr_0.85fr] lg:gap-10">
+        <div className="grid gap-12 lg:grid-cols-[1.25fr_0.9fr_0.95fr] lg:gap-10">
           {/* Intro column */}
           <div>
             <p className="eyebrow text-muted">
@@ -139,13 +87,14 @@ export default function About() {
               </h2>
             </Reveal>
             <p className="mt-5 leading-relaxed text-muted">
-              Three years in: I design and build websites — and I write the
-              copy that positions them to sell. Clean, fast, high-converting,
-              down to the last detail.
+              Three years in, I stopped treating &ldquo;building the site&rdquo;
+              and &ldquo;making it work&rdquo; as two different jobs. Now I
+              design, build, and fix the system behind it, for SaaS founders
+              and digital businesses who&apos;d rather not explain their
+              problem twice to two different people.
             </p>
             <p className="mt-4 font-hand text-xl leading-snug text-ink">
-              Now: building AI agent tooling and shipping client work from Port
-              Harcourt.
+              Currently deep in AI agent tooling, alongside client work.
             </p>
           </div>
 
@@ -188,7 +137,7 @@ export default function About() {
                 className="h-auto w-full grayscale"
               />
             </div>
-            <div aria-hidden="true" className="absolute -bottom-14 -right-10 w-40">
+            <div aria-hidden="true" className="absolute -bottom-14 -right-10 z-10 w-40">
               <p className="font-hand text-[1.55rem] leading-[1.05] text-ink">
                 Building for
                 <br />
@@ -198,35 +147,11 @@ export default function About() {
             </div>
           </motion.figure>
 
-          {/* Services column — nav anchor #services */}
-          <div id="services" className="scroll-mt-28">
-            <p className="eyebrow text-muted">Let&apos;s work together</p>
-            <p className="mt-3 font-display text-2xl font-semibold leading-snug text-ink">
-              I build websites, landing pages and{" "}
-              <span className="underline decoration-accent decoration-4 underline-offset-4">
-                web apps
-              </span>
-              .
-            </p>
-            <ul className="mt-6 space-y-4">
-              {SERVICES.map((service) => (
-                <li key={service.name} className="flex items-center gap-3">
-                  <span className="shrink-0 text-ink">
-                    <ServiceIcon name={service.icon} />
-                  </span>
-                  <span className="text-sm font-medium text-ink">
-                    {service.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CTA + OR JUST SAY HI column */}
+          {/* CTA + OR JUST SAY HI column — services now live in their own section */}
           <div>
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 rounded-lg bg-ink px-6 py-3.5 font-semibold text-bg transition-colors hover:bg-accent hover:text-ink"
+              className="group inline-flex items-center gap-2 rounded-lg bg-pill px-6 py-3.5 font-semibold text-on-ink transition-colors hover:bg-accent hover:text-ink"
             >
               Start a Project
               <span
@@ -289,7 +214,11 @@ export default function About() {
             <path d="M60 10c20 1 44-1 64-3" strokeWidth={1.4} />
           </svg>
           <p className="eyebrow mt-2 text-muted">
-            Akaka Favour — designer, developer, copywriter
+            Akaka Favour. I build it. I make it pay.
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-muted">
+            I also write <span className="font-semibold text-ink">Ship &amp; Sell</span>,
+            a newsletter about why products don&apos;t make money.
           </p>
         </div>
       </div>

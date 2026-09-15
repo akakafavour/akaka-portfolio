@@ -70,38 +70,58 @@ export default async function WorkPage({
         All work
       </Link>
 
-      {/* Header */}
-      <header className="mt-8">
-        <p className="eyebrow text-muted">{project.category}</p>
-        <h1 className="mt-4 font-display text-[clamp(2.2rem,5.5vw,4rem)] font-semibold leading-[1.05] tracking-tight text-ink">
+      {/* Header — ticket header: case number, oversized title, meta strip */}
+      <header className="mt-10">
+        <p className="eyebrow flex flex-wrap items-center gap-x-4 gap-y-1 text-muted">
+          <span className="text-ink">CASE-{String(index + 1).padStart(2, "0")}</span>
+          <span aria-hidden="true" className="h-px w-8 bg-line" />
+          {project.category}
+        </p>
+        <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.4rem,6vw,4.4rem)] font-semibold uppercase leading-[1.02] tracking-tight text-ink">
           {project.name}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
           {project.outcome}
         </p>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+
+        {/* Meta strip — the work-order rail: visit, url, stack chips */}
+        <div className="mt-8 flex flex-wrap items-center gap-3 border-y border-line py-4">
           <a
             href={project.url}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-ink transition-colors hover:bg-accent-hover"
+            className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-accent-hover"
           >
             Visit the live site
             <ArrowUpRight className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+          <span className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted">
             {project.urlLabel}
+          </span>
+          <span className="ml-auto hidden gap-2 sm:flex">
+            {project.stack.slice(0, 3).map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-line px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted"
+              >
+                {tech}
+              </span>
+            ))}
           </span>
         </div>
       </header>
 
-      {/* Hero screenshot */}
-      <figure className="mt-12 overflow-hidden rounded-2xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]">
+      {/* Hero screenshot — ticket frame with yellow corner dot */}
+      <figure className="relative mt-12 overflow-hidden rounded-2xl border border-ink bg-surface shadow-[0_30px_60px_-30px_rgba(17,18,20,0.35)]">
+        <span
+          aria-hidden="true"
+          className="absolute left-4 top-4 z-10 h-3.5 w-3.5 rounded-full bg-accent ring-4 ring-bg/60"
+        />
         <img src={project.image} alt={project.imageAlt} className="w-full" />
       </figure>
 
-      {/* Overview */}
-      <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_260px]">
+      {/* Body */}
+      <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_260px]">
         <div>
           {project.overview.map((paragraph) => (
             <p key={paragraph.slice(0, 32)} className="mt-5 text-lg leading-relaxed text-ink first:mt-0">
@@ -109,11 +129,16 @@ export default async function WorkPage({
             </p>
           ))}
 
-          {/* Case sections */}
-          <div className="mt-12 grid gap-9">
-            {project.sections.map((section) => (
-              <section key={section.heading}>
-                <h2 className="font-display text-2xl font-semibold text-ink">
+          {/* Case sections — numbered like the pipeline */}
+          <div className="mt-14 grid gap-10">
+            {project.sections.map((section, i) => (
+              <section key={section.heading} className="relative border-l-2 border-line pl-6 sm:pl-8">
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-[7px] top-2 h-3 w-3 rounded-full bg-accent ring-4 ring-bg"
+                />
+                <p className="eyebrow text-muted">§ {String(i + 1).padStart(2, "0")}</p>
+                <h2 className="mt-2 font-display text-2xl font-semibold text-ink">
                   {section.heading}
                 </h2>
                 <p className="mt-3 leading-relaxed text-muted">{section.text}</p>
@@ -121,33 +146,36 @@ export default async function WorkPage({
             ))}
           </div>
 
-          {/* Teardown — Problem / Fix / Result (Vartex) */}
+          {/* Teardown — docket rows: PROBLEM / FIX / RESULT */}
           {project.teardown && (
-            <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink bg-line sm:grid-cols-3">
+            <div className="mt-14 overflow-hidden rounded-2xl border border-ink">
               {(
                 [
-                  ["Problem", project.teardown.problem],
-                  ["Fix", project.teardown.fix],
-                  ["Result", project.teardown.result],
+                  ["Problem", project.teardown.problem, "bg-accent"],
+                  ["Fix", project.teardown.fix, "bg-ink"],
+                  ["Result", project.teardown.result, "bg-violet"],
                 ] as const
-              ).map(([label, text]) => (
-                <div key={label} className="bg-surface p-6">
-                  <p
-                    className={`eyebrow ${
-                      label === "Problem" ? "text-accent-hover" : "text-ink"
-                    }`}
-                  >
-                    {label}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+              ).map(([label, text, edge]) => (
+                <div
+                  key={label}
+                  className={`relative grid gap-1 border-line p-6 sm:grid-cols-[120px_1fr] sm:gap-6 ${
+                    label !== "Problem" ? "border-t" : ""
+                  }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-y-0 left-0 w-1.5 ${edge}`}
+                  />
+                  <p className="eyebrow pl-3 pt-1 text-muted">{label}</p>
+                  <p className="pl-3 text-sm leading-relaxed text-ink">{text}</p>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Gallery — renders only if screenshots are staged */}
+          {/* Gallery */}
           {project.gallery.length > 0 && (
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            <div className="mt-14 grid gap-6 sm:grid-cols-2">
               {project.gallery.map((shot) => (
                 <figure
                   key={shot.src}
@@ -163,15 +191,22 @@ export default async function WorkPage({
           )}
         </div>
 
-        {/* Sidebar: stack + highlights */}
+        {/* Sidebar — the spec sheet: stack, includes, CTA docket */}
         <aside className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
-          <div>
+          <div className="border border-line p-5">
             <p className="eyebrow text-muted">Stack</p>
-            <p className="mt-4 font-mono text-xs uppercase leading-loose tracking-[0.12em] text-ink">
-              {project.stack.join("  /  ")}
-            </p>
+            <ul className="mt-4 grid gap-2">
+              {project.stack.map((tech) => (
+                <li
+                  key={tech}
+                  className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div>
+          <div className="border border-line p-5">
             <p className="eyebrow text-muted">What it includes</p>
             <ul className="mt-4 grid gap-3">
               {project.highlights.map((item) => (
@@ -182,7 +217,7 @@ export default async function WorkPage({
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border border-ink bg-accent-tint p-5">
+          <div className="relative overflow-hidden border border-ink bg-accent-tint p-5 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_14px,100%_100%,0_100%)]">
             <p className="font-hand text-2xl leading-tight text-ink">
               Want this for your business?
             </p>
@@ -197,33 +232,37 @@ export default async function WorkPage({
         </aside>
       </div>
 
-      {/* Next project — a moment, not a button */}
+      {/* Next project — the handoff stamp */}
       <nav
         aria-label="Next project"
-        className="mt-20 overflow-hidden rounded-2xl border border-ink bg-surface"
+        className="group relative mt-24 overflow-hidden rounded-2xl border border-ink bg-surface"
       >
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-0 left-0 w-1.5 bg-accent transition-all duration-300 group-hover:w-3"
+        />
         <Link
           href={`/work/${next.slug}`}
-          className="group relative grid grid-cols-[1fr_auto] items-center gap-6 p-8 transition-colors duration-300 hover:bg-ink sm:p-10"
+          className="group/inner relative grid grid-cols-[1fr_auto] items-center gap-6 p-8 pl-10 transition-colors duration-300 hover:bg-ink sm:p-10 sm:pl-12"
         >
           <div>
-            <p className="eyebrow text-muted transition-colors group-hover:text-bg/60">
-              Next project
+            <p className="eyebrow text-muted transition-colors group-hover/inner:text-bg/60">
+              Next case
             </p>
-            <p className="mt-2 font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-none tracking-tight text-ink transition-colors group-hover:text-bg">
+            <p className="mt-2 font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-none tracking-tight text-ink transition-colors group-hover/inner:text-bg">
               {next.name}
             </p>
-            <p className="eyebrow mt-3 flex items-center gap-2 text-muted transition-colors group-hover:text-accent">
+            <p className="eyebrow mt-3 flex items-center gap-2 text-muted transition-colors group-hover/inner:text-accent">
               {next.category}
               <ArrowRight
                 aria-hidden="true"
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"
+                className="h-4 w-4 transition-transform duration-300 group-hover/inner:translate-x-1.5"
               />
             </p>
           </div>
           <div
             aria-hidden="true"
-            className="relative hidden w-52 justify-self-end overflow-hidden rounded-lg border border-line opacity-0 transition-all duration-300 group-hover:opacity-100 sm:block"
+            className="relative hidden w-52 justify-self-end overflow-hidden rounded-lg border border-line opacity-60 transition-all duration-300 group-hover/inner:opacity-100 sm:block"
           >
             <img src={next.image} alt="" className="w-full" loading="lazy" />
           </div>

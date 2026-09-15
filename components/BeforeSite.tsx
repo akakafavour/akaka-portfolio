@@ -17,11 +17,11 @@ export default function BeforeSite() {
     >
       {/* Gray header bar */}
       <div className="flex items-center justify-between bg-[#5f5f5f] px-[3cqw] py-[1.7cqw]">
-        <span className="flex items-center gap-[0.9cqw] text-[2.1cqw] font-bold tracking-tight text-white">
+        <span className="flex items-center gap-[0.9cqw] text-[2.1cqw] max-sm:text-[3cqw] font-bold tracking-tight text-white">
           <span className="inline-block h-[1.6cqw] w-[1.6cqw] bg-white/85" />
           BloomHarbor
         </span>
-        <span className="flex gap-[2.6cqw] text-[1.45cqw] text-white/70">
+        <span className="flex gap-[2.6cqw] text-[1.45cqw] max-sm:text-[2.1cqw] max-sm:text-[3cqw] text-white/70">
           <span>Home</span>
           <span>About</span>
           <span>Services</span>
@@ -32,14 +32,14 @@ export default function BeforeSite() {
       {/* Cramped two-column body */}
       <div className="grid flex-1 grid-cols-[1.05fr_0.95fr] gap-[2.5cqw] px-[4cqw] py-[2.6cqw]">
         <div className="flex flex-col justify-center">
-          <p className="text-[3.3cqw] font-bold leading-[1.12] text-[#333333]">
+          <p className="text-[3.3cqw] max-sm:text-[4.8cqw] font-bold leading-[1.12] text-[#333333]">
             Grow Your Business With Our Solutions
           </p>
-          <p className="mt-[1.3cqw] text-[1.55cqw] leading-snug text-[#6d6d6d]">
+          <p className="mt-[1.3cqw] text-[1.55cqw] max-sm:text-[2.3cqw] leading-snug text-[#6d6d6d]">
             We help you build a stronger online presence and reach more
             customers.
           </p>
-          <span className="mt-[1.9cqw] w-fit border border-[#9c9c9c] border-b-2 bg-[#d8d5ce] px-[2.3cqw] py-[1cqw] text-[1.4cqw] text-[#4c4c4c]">
+          <span className="mt-[1.9cqw] w-fit border border-[#9c9c9c] border-b-2 bg-[#d8d5ce] px-[2.3cqw] py-[1cqw] text-[1.4cqw] max-sm:text-[2cqw] max-sm:text-[2.9cqw] text-[#4c4c4c]">
             Get Started
           </span>
         </div>
