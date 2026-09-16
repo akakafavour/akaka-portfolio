@@ -368,12 +368,6 @@ export default function Process() {
             />
           </div>
 
-          {/* Total-time strip — speed is the offer */}
-          <p className="eyebrow mx-auto mt-6 flex w-fit items-center gap-2.5 rounded-full border border-ink bg-surface px-5 py-2.5 text-ink">
-            <ClockIcon className="h-4 w-4 text-accent-hover" />
-            Total: about 7–10 days to live
-          </p>
-
           {/* Arrow controls — snap mode only (mobile + reduced motion) */}
           {mode === "snap" && (
             <div className="mt-8 flex justify-center gap-3 lg:hidden">

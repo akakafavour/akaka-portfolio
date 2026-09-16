@@ -221,35 +221,7 @@
    Cramped serif layout — it is a prop, not product styling.
    All sizes in cqw: the slider frame is a CSS container, so the mock
    scales crisp at any DPI with zero image bytes.
-   Both slider mocks are THEMED: the same vars flip under .dark so the
-   hero before/after demo matches light and dark mode.
    ------------------------------------------------------------------ */
-.bh-site {
-  --bh-bg: #e9e7e2;
-  --bh-fg: #3a3a3a;
-  --bh-fg-strong: #333333;
-  --bh-fg-muted: #6d6d6d;
-  --bh-header: #5f5f5f;
-  --bh-panel-a: #c9c7c2;
-  --bh-panel-b: #a8a6a1;
-  --bh-building: #b9b7b2;
-  --bh-line: #9c9c9c;
-  --bh-btn-bg: #d8d5ce;
-  --bh-btn-fg: #4c4c4c;
-}
-.dark .bh-site {
-  --bh-bg: #191a1f;
-  --bh-fg: #c7c5bf;
-  --bh-fg-strong: #e3e1da;
-  --bh-fg-muted: #8f9298;
-  --bh-header: #2b2d34;
-  --bh-panel-a: #33353c;
-  --bh-panel-b: #26282e;
-  --bh-building: #3c3e46;
-  --bh-line: #4a4d55;
-  --bh-btn-bg: #2f3138;
-  --bh-btn-fg: #c7c5bf;
-}
 .bh-old {
   font-family: Georgia, "Times New Roman", serif;
 }

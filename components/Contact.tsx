@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useState } from "react";
 import { CONTACT_EMAIL } from "./Footer";
 import SectionEyebrow from "./SectionEyebrow";
 
@@ -13,12 +14,59 @@ const CHANNELS = [
   { label: "GitHub", value: "github.com/Akakaui", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
 ];
 
+type SendState = "idle" | "sending" | "sent" | "fallback" | "error";
+
 /**
- * Contact — v6 redesign: split layout. Left carries the pitch (big type,
- * response promise, channels with real brand icons); right is the elevated
- * form. No backend yet, so the form composes a prefilled email via mailto.
+ * Contact — v7: working form. Posts to /api/contact, which emails the
+ * inquiry via Resend when RESEND_API_KEY is configured; without a key the
+ * server returns delivered:false and the form falls back to a prefilled
+ * email-client draft so the visitor's message is never lost.
  */
 export default function Contact() {
+  const [state, setState] = useState<SendState>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
+    setState("sending");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (json.ok && json.delivered) {
+        setState("sent");
+        form.reset();
+      } else if (json.ok && !json.delivered) {
+        // Delivery not configured yet — hand off to the email client.
+        const subject = encodeURIComponent(
+          `Project inquiry from ${payload.name}`,
+        );
+        const body = encodeURIComponent(
+          `${payload.message}\n\n— ${payload.name}\n${payload.email}`,
+        );
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+        setState("fallback");
+      } else {
+        setErrorMsg(json.error ?? "Something went wrong.");
+        setState("error");
+      }
+    } catch {
+      setErrorMsg("Network error — email me directly instead.");
+      setState("error");
+    }
+  }
+
   return (
     <section
       id="contact"
@@ -80,17 +128,8 @@ export default function Contact() {
 
         {/* Right — the form */}
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const subject = encodeURIComponent(
-              `Project inquiry from ${data.get("name") ?? "someone"}`,
-            );
-            const body = encodeURIComponent(
-              `${data.get("message") ?? ""}\n\n— ${data.get("name") ?? ""}\n${data.get("email") ?? ""}`,
-            );
-            window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-          }}
+          data-form-version="v8"
+          onSubmit={onSubmit}
           className="grid content-start gap-4 rounded-2xl border border-ink bg-surface p-6 shadow-[0_24px_48px_-28px_rgba(17,18,20,0.3)] sm:p-8"
         >
           <div className="grid gap-1.5">
@@ -136,10 +175,29 @@ export default function Contact() {
           </div>
           <button
             type="submit"
-            className="on-accent mt-1 w-fit rounded-full bg-accent px-8 py-3.5 font-semibold text-pill transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover"
+            disabled={state === "sending"}
+            className="on-accent mt-1 w-fit rounded-full bg-accent px-8 py-3.5 font-semibold text-pill transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover disabled:cursor-wait disabled:opacity-70"
           >
-            Send message
+            {state === "sending" ? "Sending…" : "Send message"}
           </button>
+
+          {state === "sent" && (
+            <p className="text-sm font-semibold text-ink" role="status">
+              ✓ Message sent. You get an answer, usually the same day.
+            </p>
+          )}
+          {state === "fallback" && (
+            <p className="text-sm font-semibold text-ink" role="status">
+              ✓ Opening your email app with the message prefilled — just hit
+              send.
+            </p>
+          )}
+          {state === "error" && (
+            <p className="text-sm font-semibold text-ink" role="alert">
+              ✗ {errorMsg}
+            </p>
+          )}
+
           <p className="eyebrow leading-relaxed text-muted">
             Hate forms? Email me directly:{" "}
             <a

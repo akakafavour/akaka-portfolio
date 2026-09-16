@@ -156,10 +156,6 @@ export default function Hero() {
           </div>
 
           <BeforeAfterSlider wipe={wipe} />
-
-          <p className="eyebrow mt-4 text-muted">
-            Sample redesign. It reveals as you scroll.
-          </p>
         </motion.div>
 
         <motion.ul
