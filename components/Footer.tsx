@@ -5,12 +5,14 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Asterisk } from "./Glyphs";
 
 const X_URL = "https://x.com/AkakaFavour";
-const GITHUB_URL = "https://github.com/Akakaui";
+const GITHUB_URL = "https://github.com/akakafavour";
+const LINKEDIN_URL = "https://www.linkedin.com/in/akaka-favour-490188291/";
 // TODO(Akaka): replace with the real address — one constant, used site-wide.
 export const CONTACT_EMAIL = "hello@akaka-favour.com";
 
 const LINKS = [
   { label: "Email", href: `mailto:${CONTACT_EMAIL}`, icon: "/icons/gmail.svg", external: false },
+  { label: "LinkedIn", href: LINKEDIN_URL, icon: "/icons/linkedin.svg", external: true },
   { label: "GitHub", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
   { label: "X", href: X_URL, icon: "/icons/x.svg", external: true },
 ];

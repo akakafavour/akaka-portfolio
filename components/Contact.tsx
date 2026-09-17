@@ -5,13 +5,15 @@ import { useState } from "react";
 import { CONTACT_EMAIL } from "./Footer";
 import SectionEyebrow from "./SectionEyebrow";
 
-const GITHUB_URL = "https://github.com/Akakaui";
+const GITHUB_URL = "https://github.com/akakafavour";
 const X_URL = "https://x.com/AkakaFavour";
+const LINKEDIN_URL = "https://www.linkedin.com/in/akaka-favour-490188291/";
 
 const CHANNELS = [
   { label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, icon: "/icons/gmail.svg", external: false },
+  { label: "LinkedIn", value: "akaka-favour", href: LINKEDIN_URL, icon: "/icons/linkedin.svg", external: true },
   { label: "X", value: "@AkakaFavour", href: X_URL, icon: "/icons/x.svg", external: true },
-  { label: "GitHub", value: "github.com/Akakaui", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
+  { label: "GitHub", value: "github.com/akakafavour", href: GITHUB_URL, icon: "/icons/github.svg", external: true },
 ];
 
 type SendState = "idle" | "sending" | "sent" | "fallback" | "error";

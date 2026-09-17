@@ -6,10 +6,12 @@ import HandAsset from "./HandAsset";
 import Reveal from "./Reveal";
 import { Asterisk, HandArrow } from "./Glyphs";
 
-const GITHUB_URL = "https://github.com/Akakaui";
+const GITHUB_URL = "https://github.com/akakafavour";
+const LINKEDIN_URL = "https://www.linkedin.com/in/akaka-favour-490188291/";
 
 const CONTACT_ROWS = [
-  { icon: "github", label: "github.com/Akakaui", href: GITHUB_URL, external: true },
+  { icon: "github", label: "github.com/akakafavour", href: GITHUB_URL, external: true },
+  { icon: "linkedin", label: "in/akaka-favour", href: LINKEDIN_URL, external: true },
   { icon: "x", label: "x.com/AkakaFavour", href: "https://x.com/AkakaFavour", external: true },
 ];
 
@@ -43,6 +45,14 @@ function ContactIcon({ name }: { name: string }) {
     return (
       <svg {...common}>
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+      </svg>
+    );
+  if (name === "linkedin")
+    return (
+      <svg {...common}>
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5.98 5.98 0 0 1 16 8Z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
       </svg>
     );
   return (
@@ -215,10 +225,6 @@ export default function About() {
           </svg>
           <p className="eyebrow mt-2 text-muted">
             Akaka Favour. I build it. I make it pay.
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-muted">
-            I also write <span className="font-semibold text-ink">Ship &amp; Sell</span>,
-            a newsletter about why products don&apos;t make money.
           </p>
         </div>
       </div>
